@@ -10,7 +10,8 @@
 <meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script>window.CESIUM_BASE_URL = "https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/";</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/Widgets/widgets.css">
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
 <style>
 :root {
@@ -94,14 +95,15 @@ a { color: var(--link-dark); text-decoration: none; } a:hover { text-decoration:
 .app { padding-block: 40px 120px; }
 .app .head { text-align: center; margin-bottom: 40px; }
 .stage { position: relative; height: min(84vh, 820px); min-height: 540px; border-radius: 28px; overflow: hidden; background: #050506; box-shadow: 0 0 0 1px var(--line-dark); }
-#map { position: absolute; inset: 0; background: #050506; }
-.leaflet-container { background: #050506; font: inherit; }
-.leaflet-control-attribution { background: rgba(0,0,0,.55) !important; color: #6e6e73 !important; font-size: 10px; border-radius: 8px 0 0 0; }
-.leaflet-control-attribution a { color: #8e8e93 !important; }
-.leaflet-bar a { background: rgba(28,28,30,.85); color: #f5f5f7; border-color: #333336 !important; }
-.leaflet-bar a:hover { background: #2c2c2e; }
-.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: rgba(28,28,30,.96); color: var(--on-dark); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
-.leaflet-popup-content { margin: 14px 16px; font-size: 13.5px; line-height: 1.45; }
+#map { position: absolute; inset: 0 0 0 396px; background: #000; }
+.cesium-viewer, .cesium-widget, .cesium-widget canvas { width: 100%; height: 100%; }
+.cesium-widget-credits, .cesium-viewer-bottom { display: none !important; }
+#credits { position: absolute; z-index: 1000; right: 14px; bottom: 10px; font-size: 10px; color: #8e8e93; max-width: 60%; text-align: right; }
+#credits * { color: #8e8e93 !important; font-size: 10px !important; display: inline !important; } #credits img { display: none !important; }
+.sun { position: absolute; z-index: 1000; right: 16px; top: 62px; display: inline-flex; padding: 3px; border-radius: 980px; background: rgba(28,28,30,.78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.sun button { border: 0; background: transparent; color: #8e8e93; font: 500 12.5px var(--sans); padding: 6px 12px; border-radius: 980px; cursor: pointer; }
+.sun button[aria-pressed="true"] { background: rgba(255,255,255,.14); color: var(--on-dark); }
+.pop { position: absolute; z-index: 1001; max-width: 250px; background: rgba(28,28,30,.96); color: var(--on-dark); border-radius: 14px; padding: 12px 14px; font-size: 13.5px; line-height: 1.45; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
 .layers { position: absolute; z-index: 1000; top: 16px; right: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .tg { display: inline-flex; gap: 8px; align-items: center; padding: 8px 14px; border-radius: 980px; border: 0; background: rgba(28,28,30,.78);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); cursor: pointer; font: 500 13px var(--sans); color: #8e8e93; }
@@ -161,10 +163,12 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
 
 @media (max-width: 1000px) { .cards { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .cards .card:nth-child(3) { display: none; } }
 @media (max-width: 760px) {
+  .sun { top: auto; bottom: calc(50% + 18px); right: 10px; } #credits { display: none; }
   .gnav .links a:not(.keep) { display: none; }
   .cards, .pair, .steps, .wide-tile { grid-template-columns: minmax(0, 1fr); } .cards .card:nth-child(3) { display: flex; }
   .stage { height: 88svh; border-radius: 20px; }
   .panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; height: 50%; }
+  #map { inset: 0 0 50% 0; }
   .layers { top: 10px; right: 10px; left: 10px; justify-content: flex-start; } .tg { padding: 6px 10px; font-size: 12px; }
   .clock { display: none; }
   .tile { padding: 28px; }
@@ -208,7 +212,7 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
 <section class="app" id="live">
   <div class="wide">
     <div class="head"><p class="eyebrow">Live map</p><h2 class="section-title">Watch it happen.</h2>
-      <p class="lede" style="margin-inline:auto">Every active satellite, moving in real time. Pick anything orange to see where it can fall.</p></div>
+      <p class="lede" style="margin-inline:auto">Every active satellite in real time, on a globe lit by today's sun. Drag to spin, scroll to zoom, and pick anything orange to see where it can fall.</p></div>
     <div class="stage">
       <div id="map" role="application" aria-label="Live map of satellites, objects coming down and debris found on the ground"></div>
       <div class="layers" role="group" aria-label="Map layers">
@@ -221,7 +225,10 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
         <div class="view" id="v-down"><div class="loading">Loading orbits…</div></div>
         <div class="view hide" id="v-found"></div>
       </div>
+      <div class="sun" role="group" aria-label="Lighting"><button data-sun="live" aria-pressed="true">Live sun</button><button data-sun="day" aria-pressed="false">Day</button><button data-sun="night" aria-pressed="false">Night</button></div>
+      <div class="pop" id="pop" hidden></div>
       <div class="clock num" id="clock"></div>
+      <div id="credits"></div>
     </div>
   </div>
 </section>
@@ -258,7 +265,7 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
   <span>Made by Tilak Kumar · <a href="https://github.com/Tilakkumar13/fallen">Code and data</a></span>
 </div></div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/Cesium.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script type="module">
@@ -343,48 +350,81 @@ function landing() {
     el.addEventListener("click", go); el.addEventListener("keydown", e => { if (e.key === "Enter") go(e); }); });
 }
 
-// ================================================================ live map
-const map = L.map("map", { worldCopyJump: true, minZoom: 2, maxZoom: 7, zoomControl: false, scrollWheelZoom: false, attributionControl: true }).setView([15, 40], 2);
-L.control.zoom({ position: "bottomright" }).addTo(map);
-map.attributionControl.setPrefix(false).addAttribution("Natural Earth · CelesTrak · Aerospace Corp. · JRC GHS-POP · ESA");
-map.on("focus click", () => map.scrollWheelZoom.enable()); map.on("mouseout", () => map.scrollWheelZoom.disable());
-const gBase = L.layerGroup().addTo(map), gCountries = L.layerGroup().addTo(map), gPath = L.layerGroup().addTo(map), gFound = L.layerGroup().addTo(map);
-const Sky = L.Layer.extend({
-  onAdd(m) { this.c = L.DomUtil.create("canvas"); Object.assign(this.c.style, { position: "absolute", pointerEvents: "none" }); m.getPanes().overlayPane.appendChild(this.c);
-    m.on("moveend zoomend resize viewreset", this.reset, this); this.reset(); },
-  reset() { const s = map.getSize(), r = devicePixelRatio || 1; L.DomUtil.setPosition(this.c, map.containerPointToLayerPoint([0, 0]));
-    this.c.width = s.x * r; this.c.height = s.y * r; this.c.style.width = s.x + "px"; this.c.style.height = s.y + "px"; this.draw(); },
-  draw() { if (!this.c) return; const g = this.c.getContext("2d"), r = devicePixelRatio || 1, w = map.getSize().x; g.setTransform(r, 0, 0, r, 0, 0); g.clearRect(0, 0, this.c.width, this.c.height);
-    const P = (lat, lon, f) => { for (const dx of [-360, 0, 360]) { const q = map.latLngToContainerPoint([lat, lon + dx]); if (q.x > -12 && q.x < w + 12) f(q); } };
-    if (show.sky) { g.fillStyle = "rgba(138,184,255,.5)"; for (const p of skyPos) if (p) P(p[0], p[1], q => g.fillRect(q.x - .8, q.y - .8, 1.6, 1.6)); }
-    if (show.fall) for (const o of LIVE) { const p = o._pos; if (!p) continue; P(p[0], p[1], q => {
-      const gr = g.createRadialGradient(q.x, q.y, 0, q.x, q.y, o === sel ? 16 : 10); gr.addColorStop(0, "rgba(255,240,220,1)"); gr.addColorStop(.3, "rgba(255,138,61,.9)"); gr.addColorStop(1, "rgba(255,90,54,0)");
-      g.fillStyle = gr; g.beginPath(); g.arc(q.x, q.y, o === sel ? 16 : 10, 0, 7); g.fill(); }); }
-  }
-});
-const sky = new Sky().addTo(map);
+// ================================================================ live globe (CesiumJS)
+const C = Cesium;
+C.Ion.defaultAccessToken = undefined;
+const viewer = new C.Viewer("map", {
+  baseLayer: false, baseLayerPicker: false, geocoder: false, homeButton: false, sceneModePicker: false, navigationHelpButton: false,
+  animation: false, timeline: false, fullscreenButton: false, infoBox: false, selectionIndicator: false,
+  terrainProvider: new C.EllipsoidTerrainProvider(), creditContainer: $("credits"), requestRenderMode: true, maximumRenderTimeChange: Infinity,
+  contextOptions: { webgl: { alpha: false } } });
+const scene = viewer.scene, globeC = scene.globe;
+viewer.clock.shouldAnimate = true; viewer.clock.multiplier = 1; viewer.clock.currentTime = C.JulianDate.now();
+scene.backgroundColor = C.Color.BLACK; globeC.baseColor = C.Color.fromCssColorString("#0b0d12");
+globeC.enableLighting = true; globeC.dynamicAtmosphereLighting = true; globeC.dynamicAtmosphereLightingFromSun = true;
+globeC.showGroundAtmosphere = true; scene.skyAtmosphere.show = true; scene.fog.enabled = false;
+globeC.maximumScreenSpaceError = 1.5;
+scene.screenSpaceCameraController.minimumZoomDistance = 2.5e5; scene.screenSpaceCameraController.maximumZoomDistance = 4.5e7;
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
+const day = viewer.imageryLayers.addImageryProvider(new C.UrlTemplateImageryProvider({ url: ESRI + "/World_Imagery/MapServer/tile/{z}/{y}/{x}", maximumLevel: 18,
+  credit: new C.Credit("Imagery: Esri, Maxar, Earthstar Geographics") }));
+const night = viewer.imageryLayers.addImageryProvider(new C.UrlTemplateImageryProvider({
+  url: "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png", maximumLevel: 8,
+  credit: new C.Credit("Night lights: NASA Black Marble (GIBS)") }));
+const labels = viewer.imageryLayers.addImageryProvider(new C.UrlTemplateImageryProvider({ url: ESRI + "/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", maximumLevel: 18,
+  credit: new C.Credit("Labels: Esri") }));
+function sunMode(m) {
+  document.querySelectorAll("[data-sun]").forEach(b => b.setAttribute("aria-pressed", b.dataset.sun === m));
+  globeC.enableLighting = m === "live";
+  day.show = m !== "night"; day.dayAlpha = 1; day.nightAlpha = m === "live" ? 0 : 1;
+  night.show = m !== "day"; night.dayAlpha = m === "night" ? 1 : 0; night.nightAlpha = 1;
+  labels.dayAlpha = 1; labels.nightAlpha = .75;
+  scene.requestRender();
+}
+document.querySelectorAll("[data-sun]").forEach(b => b.onclick = () => sunMode(b.dataset.sun));
+sunMode("live");
+viewer.camera.setView({ destination: C.Cartesian3.fromDegrees(40, 15, 1.55e7) });
+
+const skyPts = scene.primitives.add(new C.PointPrimitiveCollection());
+const fallPts = scene.primitives.add(new C.PointPrimitiveCollection());
+const foundPts = scene.primitives.add(new C.PointPrimitiveCollection());
+const pathSrc = new C.CustomDataSource("path"); viewer.dataSources.add(pathSrc);
+const ecef = (rec, when, gmst) => { const pv = satellite.propagate(rec, when); if (!pv || !pv.position) return null; const f = satellite.eciToEcf(pv.position, gmst);
+  return new C.Cartesian3(f.x * 1000, f.y * 1000, f.z * 1000); };
+const SAT = C.Color.fromCssColorString("#9cc4ff").withAlpha(.85), FIRE = C.Color.fromCssColorString("#ff8a3d"), HOT = C.Color.fromCssColorString("#ffe2c2");
 function tick() {
-  const now = new Date(); $("clock").textContent = now.toISOString().slice(0, 19).replace("T", " ") + " UTC";
-  skyPos = SKY.map(s => subpoint(s, now)); for (const o of LIVE) o._pos = subpoint(o._rec, now); sky.draw();
+  const now = new Date(), g = satellite.gstime(now); $("clock").textContent = now.toISOString().slice(0, 19).replace("T", " ") + " UTC";
+  if (show.sky) SKY.forEach((s, k) => { const p = ecef(s, now, g); const pt = skyPts.get(k); if (p) { pt.position = p; pt.show = true; } else pt.show = false; });
+  LIVE.forEach((o, k) => { o._pos = subpoint(o._rec, now); const p = ecef(o._rec, now, g); const pt = fallPts.get(k); if (p) { pt.position = p; pt.show = show.fall; }
+    pt.pixelSize = o === sel ? 16 : 10; pt.outlineWidth = o === sel ? 3 : 2; });
   document.querySelectorAll("[data-cd]").forEach(el => el.textContent = countdown(LIVE[+el.dataset.cd]));
+  scene.requestRender();
 }
 function tab(k) { for (const t of ["down", "found"]) { $("t-" + t).setAttribute("aria-selected", t === k); $("v-" + t).classList.toggle("hide", t !== k); } }
 ["down", "found"].forEach(k => $("t-" + k).addEventListener("click", () => tab(k)));
+function clearPath() { pathSrc.entities.removeAll(); }
 function listView() {
-  sel = null; gPath.clearLayers(); gCountries.clearLayers(); sky.draw();
+  sel = null; clearPath();
   $("v-down").innerHTML = `<p class="note">Due back soonest first · updated ${esc(window.UPDATED)}</p><ul class="list">${LIVE.map((o, i) => `<li class="item" tabindex="0" data-i="${i}">
     <span class="nm"><span class="chip ${o.type === "R/B" ? "rb" : ""}">${esc(TYPES[o.type] || "Object")}</span>${esc(o.name)}</span><span class="w" data-cd="${i}">${countdown(o)}</span>
     <span class="sub">${peopleLine(o)}</span></li>`).join("")}</ul>`;
   $("v-down").querySelectorAll(".item").forEach(li => { const go = () => detail(LIVE[+li.dataset.i]); li.onclick = go; li.onkeydown = e => { if (e.key === "Enter") go(); }; });
 }
-const split = (t) => { const s = [[]]; t.forEach((p, k) => { if (k && Math.abs(p[1] - t[k - 1][1]) > 180) s.push([]); s[s.length - 1].push(p); }); return s; };
-function detail(o) {
-  sel = o; tab("down"); gPath.clearLayers(); gCountries.clearLayers();
+const ring = (lat) => { const a = []; for (let lo = -180; lo <= 180; lo += 2) a.push(lo, lat); return C.Cartesian3.fromDegreesArray(a); };
+function detail(o, fly = true) {
+  sel = o; tab("down"); clearPath();
   const e = o.exposure, lim = e.mode === "band" ? e.lat_limit : Math.round(Math.min(o.inc, 180 - o.inc) * 10) / 10;
-  for (const s of [lim, -lim]) L.polyline([[s, -540], [s, 540]], { color: "#ff8a3d", weight: 1, opacity: .45, dashArray: "4 6", interactive: false }).addTo(gPath);
-  if (e.mode === "path") for (const seg of split(e.track)) { L.polyline(seg, { color: "#ff5a36", weight: 8, opacity: .18, interactive: false }).addTo(gPath); L.polyline(seg, { color: "#ffc27a", weight: 1.8, opacity: .95, interactive: false }).addTo(gPath); }
+  for (const s of [lim, -lim]) pathSrc.entities.add({ polyline: { positions: ring(s), width: 1.5, arcType: C.ArcType.RHUMB,
+    material: new C.PolylineDashMaterialProperty({ color: FIRE.withAlpha(.7), dashLength: 14 }) } });
+  if (e.mode === "path") { const a = []; e.track.forEach(p => a.push(p[1], p[0]));
+    pathSrc.entities.add({ polyline: { positions: C.Cartesian3.fromDegreesArray(a), width: 6, arcType: C.ArcType.GEODESIC,
+      material: new C.PolylineGlowMaterialProperty({ color: FIRE, glowPower: .35, taperPower: 1 }) } }); }
   const val = {}; let vmax = 0; for (const c of e.countries) { const v = e.mode === "path" ? c.people : c.share; val[c.n3] = v; vmax = Math.max(vmax, v); }
-  L.geoJSON(WORLD, { interactive: false, filter: f => val[f.id] > 0, style: f => ({ fillColor: "#ff8a3d", fillOpacity: .1 + .45 * Math.sqrt(val[f.id] / vmax), color: "#ff8a3d", weight: .6, opacity: .6 }) }).addTo(gCountries);
+  for (const f of WORLD.features) { if (!(val[f.id] > 0)) continue;
+    const alpha = .12 + .4 * Math.sqrt(val[f.id] / vmax), polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    for (const poly of polys) { const ring0 = poly[0].flat(); if (ring0.length < 6) continue;
+      pathSrc.entities.add({ polygon: { hierarchy: C.Cartesian3.fromDegreesArray(ring0), material: FIRE.withAlpha(alpha), height: 0, outline: false } });
+      pathSrc.entities.add({ polyline: { positions: C.Cartesian3.fromDegreesArray(ring0.concat(ring0.slice(0, 2))), width: 1, material: FIRE.withAlpha(.8) } }); } }
   const rows = e.countries.slice(0, 10).map(c => { const v = e.mode === "path" ? c.people : c.share;
     return `<span>${esc(c.name)}</span><span class="num">${e.mode === "path" ? big(c.people) : (c.share * 100).toFixed(1) + "%"}</span><span class="bar"><i style="width:${(100 * v / vmax).toFixed(1)}%"></i></span>`; }).join("");
   const found = HIST.points.filter(p => e.countries.some(c => c.n3 === p.n3)).length;
@@ -398,8 +438,7 @@ function detail(o) {
     <p class="h">Already fallen in these countries</p><p class="small" style="margin-top:0">${found ? `${found} recorded finds. <a href="#" id="sf">Show them</a>` : "None on record."}</p>
     <p class="h">Sources</p><p class="src"><a href="${o.links.celestrak}" target="_blank" rel="noopener">CelesTrak</a><a href="${o.links.aerospace}" target="_blank" rel="noopener">Aerospace Corp.</a><a href="${o.links.n2yo}" target="_blank" rel="noopener">N2YO</a></p></div>`;
   $("v-down").scrollTop = 0; $("back").onclick = listView; const sf = $("sf"); if (sf) sf.onclick = (ev) => { ev.preventDefault(); tab("found"); foundView(e.countries.map(c => c.n3)); };
-  if (o._pos) map.flyTo([Math.max(-55, Math.min(60, o._pos[0])), o._pos[1]], 2, { duration: .9 });
-  sky.draw();
+  if (fly && o._pos) viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(o._pos[1], Math.max(-60, Math.min(60, o._pos[0])), 1.15e7), duration: 1.6 });
 }
 function foundView(only) {
   const pts = HIST.points.filter(p => !only || only.includes(p.n3)).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
@@ -407,31 +446,40 @@ function foundView(only) {
     <span class="nm">${p.src !== "ESA" ? '<span class="chip news">Local news</span>' : ""}${esc(p.name)}</span><span class="w" style="color:#8e8e93">${esc((p.date || "").slice(0, 4))}</span>
     <span class="sub">${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""} · ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}</span></li>`).join("")}</ul>`;
   const a = $("all"); if (a) a.onclick = (ev) => { ev.preventDefault(); foundView(); };
-  $("v-found").querySelectorAll(".item").forEach(li => li.onclick = (ev) => { if (ev.target.tagName !== "A") map.flyTo([+li.dataset.lat, +li.dataset.lon], 5, { duration: .9 }); });
+  $("v-found").querySelectorAll(".item").forEach(li => li.onclick = (ev) => { if (ev.target.tagName !== "A" && li.dataset.lat !== "null")
+    viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(+li.dataset.lon, +li.dataset.lat, 6e5), duration: 2 }); });
 }
-function foundLayer() {
-  gFound.clearLayers(); if (!show.found) return;
-  for (const p of HIST.points) { if (p.lat == null) continue;
-    L.circleMarker([p.lat, p.lon], p.src === "ESA" ? { radius: 3, color: "#000", weight: 1, fillColor: "#f5f5f7", fillOpacity: .9 } : { radius: 5, color: "#ff8a3d", weight: 2, fillOpacity: 0 })
-      .bindPopup(`<b>${esc(p.name)}</b><br>${esc(p.date || "")} · ${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""}<br>${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}`).addTo(gFound); }
+// click anything on the globe
+const pop = $("pop");
+new C.ScreenSpaceEventHandler(scene.canvas).setInputAction((ev) => {
+  const hit = scene.pick(ev.position); pop.hidden = true;
+  if (!hit || !hit.id) return;
+  if (hit.id.kind === "fall") detail(LIVE[hit.id.i], false);
+  if (hit.id.kind === "found") { const p = hit.id.p;
+    pop.innerHTML = `<b>${esc(p.name)}</b><br>${esc(p.date || "")} · ${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""}<br>${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}`;
+    pop.style.left = Math.min(ev.position.x + 12, scene.canvas.clientWidth - 260) + "px"; pop.style.top = (ev.position.y + 12) + "px"; pop.hidden = false; }
+}, C.ScreenSpaceEventType.LEFT_CLICK);
+function tg(id, key, fn) { $(id).onclick = () => { show[key] = !show[key]; $(id).setAttribute("aria-pressed", show[key]); fn && fn(); scene.requestRender(); }; }
+tg("tg-sky", "sky", () => { skyPts.show = show.sky; }); tg("tg-fall", "fall", () => { fallPts.show = show.fall; pathSrc.show = show.fall; }); tg("tg-found", "found", () => { foundPts.show = show.found; });
+function buildPoints() {
+  SKY.forEach(() => skyPts.add({ pixelSize: 2, color: SAT, show: false }));
+  LIVE.forEach((o, i) => fallPts.add({ pixelSize: 10, color: FIRE, outlineColor: HOT, outlineWidth: 2, id: { kind: "fall", i }, show: false }));
+  for (const p of HIST.points) if (p.lat != null) foundPts.add({ position: C.Cartesian3.fromDegrees(p.lon, p.lat, 0), id: { kind: "found", p },
+    pixelSize: p.src === "ESA" ? 7 : 10, color: p.src === "ESA" ? C.Color.WHITE : C.Color.TRANSPARENT, outlineColor: p.src === "ESA" ? C.Color.BLACK : FIRE, outlineWidth: p.src === "ESA" ? 1 : 2.5,
+    disableDepthTestDistance: 0 });
 }
-function tg(id, key, fn) { $(id).onclick = () => { show[key] = !show[key]; $(id).setAttribute("aria-pressed", show[key]); fn && fn(); sky.draw(); }; }
-tg("tg-sky", "sky"); tg("tg-fall", "fall", () => { if (!show.fall) { gPath.clearLayers(); gCountries.clearLayers(); } else if (sel) detail(sel); }); tg("tg-found", "found", foundLayer);
 
 // ================================================================ load
 (async () => {
   try {
     const J = (u) => fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r; });
-    const [tle, live, hist, world, land, dots] = await Promise.all([J("data/sky.tle").then(r => r.text()), J("data/live.json").then(r => r.json()), J("data/history.json").then(r => r.json()),
-      J("data/world.json").then(r => r.json()), J("data/land.json").then(r => r.json()), J("data/globe.json").then(r => r.json())]);
+    const [tle, live, hist, world, dots] = await Promise.all([J("data/sky.tle").then(r => r.text()), J("data/live.json").then(r => r.json()), J("data/history.json").then(r => r.json()),
+      J("data/world.json").then(r => r.json()), J("data/globe.json").then(r => r.json())]);
     const T = tle.split(/\r?\n/).filter(Boolean); for (let i = 0; i + 2 < T.length; i += 3) { try { SKY.push(satellite.twoline2satrec(T[i + 1], T[i + 2])); } catch (e) {} }
     LIVE = live.objects.filter(o => Date.now() < Date.parse(o.t0) + o.half_h * 3600e3 + 6 * 3600e3); LIVE.forEach(o => o._rec = satellite.twoline2satrec(o.tle[0], o.tle[1]));
     window.UPDATED = live.updated.replace("T", " ").slice(0, 16) + " UTC"; HIST = hist; WORLD = topojson.feature(world, world.objects.countries);
-    L.geoJSON(topojson.feature(land, land.objects.land), { interactive: false, style: { fillColor: "#1c1c1f", fillOpacity: 1, color: "#2c2c30", weight: .6 } }).addTo(gBase);
-    L.geoJSON(topojson.mesh(world, world.objects.countries, (a, b) => a !== b), { interactive: false, style: { color: "#2a2a2e", weight: .5 } }).addTo(gBase);
-    for (let la = -60; la <= 60; la += 30) L.polyline([[la, -540], [la, 540]], { color: "#141416", weight: 1, interactive: false }).addTo(gBase);
     $("n-sky").textContent = SKY.length.toLocaleString("en"); $("n-fall").textContent = LIVE.length; $("n-found").textContent = HIST.points.length;
-    tick(); listView(); foundView(); foundLayer(); landing(); setInterval(tick, 1000);
+    buildPoints(); tick(); listView(); foundView(); landing(); setInterval(tick, 1000);
     try { globe(dots); } catch (e) { console.warn("globe", e); }
     const want = new URLSearchParams(location.search).get("norad"); const w = want && LIVE.find(x => String(x.norad) === want); if (w) detail(w);
   } catch (e) { $("v-down").innerHTML = `<div class="loading">Couldn't load the orbit data (${esc(e.message)}). Reload to try again.</div>`; console.error(e); }
