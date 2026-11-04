@@ -1,0 +1,236 @@
+COSPAR ID,Name,Re-entry Date,"Location(Latitude, Longitude)",Country,Mass [kg],Shape,Size [mm],Material,Type of debris,Object class
+2024-173L,Jielong-3 4th stage,2025-10-19,"-23.370, 119.639",Australia,,cylindrical,1000 x,"carbon fiber,metal",Pressure vessel,Rocket Body
+2025-201N,Jielong-3 R/B,2025-09-25,"-27.386, -59.095",Argentina,,cylindrical,1700 x 1200,carbon fiber,Pressure vessel,Rocket Body
+2024-156G,Long March CZ-4B L-14B (YF40B),2025-03-09,"-32.781, -61.58",Argentina,2,cylindrical,800 x 300,"carbon fiber, titanium",Pressure vessel,Rocket Bodies
+2024-156G,Long March CZ-4B L-14B (YF40B),2025-03-09,"-32.753, -61.38",Argentina,2,cylindrical,800 x 300,"carbon fiber, titanium",Pressure vessel,Rocket Bodies
+2024-156G,Long March CZ-4B L-14B (YF40B),2025-03-09,"-32.782, -61.59",Argentina,2,cylindrical,800 x 300,"carbon fiber, titanium",Pressure vessel,Rocket Bodies
+2024-156G,Long March CZ-4B L-14B (YF40B),2025-03-09,"-32.803, -61.62",Argentina,2,cylindrical,800 x 300,"carbon fiber, titanium",Pressure vessel,Rocket Bodies
+2024-178B,SpaceX Crew-9 Dragon spacecraft,2025-03-24,"23.175, 0.289",Algeria,,"curved, semi circular",,carbon fiber,Unpressurised trunk's parts,Payload
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.353, 16.828",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.314, 16.871",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.428, 16.363",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.415, 16.462",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.499, 15.881",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.493, 16.008",Poland,30,cylindrical,1500 x 600,composite,Pressure vessel,Rocket Bodies
+2025-022Y,Falcon 9 second stage,2025-02-19,"52.343, 16.659",Poland,,undefined,,metal,Nozzle fragments,Rocket Bodies
+2008-034C,Ariane SYLDA adapter-flight V184,2024-12-30,"-1.58, 37.61",Kenya,500,spherical,2500,metal,Separation ring,Rocket Bodies
+2008-034C,Ariane SYLDA adapter-flight V184,2024-12-30,"-1.58, 37.61",Kenya,,,,carbon,"Carbon wrap, isolation foil",Rocket Bodies
+2024-129,Starlink 11214 or Starlink 11202,2024-08-,"49.996, -106.8",Canada,2.5,rectangle,610 x 460,aluminum,Piece of a modem enclosure lid,Payload
+2023-128B,SpaceX Crew-7 Dragon spacecraft,2024-05-21,"35.585, -82.87",United States,41,cuboid rectangle,1000 x 1200 x 25,burnt carbon fiber dotted with metallic embeds,Pieces of trunk section,Payloads
+2023-128B,SpaceX Crew-7 Dragon spacecraft,2024-05-21,"35.174, -83.38",United States,0.9-1.4,undefined,400 x 100,carbon fiber weaving and burnt titanium,Pieces of trunk section,Payloads
+2023-128B,SpaceX Crew-7 Dragon spacecraft,2024-05-21,"35.447, -83.0",United States,,,,carbon fiber,Pieces of trunk section,Payloads
+1998-067RZ,Piece of battery pallet jettisoned from the ISS,2024-03-08,"26.139, -81.8",United States,0.7,cylindrical,102 x 41,metal superalloy Inconel,Stanchion of a flight support equipment from the ISS,Payload
+2024-014B,Axiom 3 Dragon trunk,2024-02-26,"51.177, -103.5",Canada,45,,2000 (wide),"carbon composite, aluminum",Fragment,Payloads
+2024-014B,Axiom 3 Dragon trunk,2024-02-26,"51.177, -103.5",Canada,10,,,,Fragment,Payloads
+2024-014B,Axiom 3 Dragon trunk,2024-02-26,"51.177, -103.5",Canada,,undefined,>2000 tall,,Shard,Payloads
+2024-014B,Axiom 3 Dragon trunk,2024-02-26,"51.177, -103.5",Canada,,,,,Fragments,Payloads
+,Expended third stage of an Indian PSLV rocket,,"-30.13, 115.0",Australia,20,cylindrical,2500x3000,"light carbon fiber, composite,metal",Fuel containment vessel,Rocket Body
+2022-085B,Long March-5B core stage,2022-07-30,"3.605, 113.43",Malaysia,,unknown,130 (long),metal,Boosters' fragments,Rocket Bodies
+2022-085B,Long March-5B core stage,2022-07-30,"3.859, 113.71",Malaysia,,cylindrical,,metal,Boosters' metal shard,Rocket Bodies
+2022-085B,Long March-5B core stage,2022-07-30,"0.791, 110.5",Indonesia,,cylindrical,5000 x 2000,metal,Boosters' part,Rocket Bodies
+2022-085B,Long March-5B core stage,2022-07-30,"0.791, 110.5",Indonesia,,cylindrical,4000 (wide),metal,Boosters' part,Rocket Bodies
+2022-085B,Long March-5B core stage,2022-07-30,"2.233, 111.83",Malaysia,,,51 x 76,metal,Fragments,Rocket Bodies
+2020-084B,SpaceX Crew-1 Dragon trunk,2022-07-08,"-36.573, 148.55",Australia,100,triangular,3200 x 80 x 580,"titanium, steel, aluminum, carbon fiber, insulating materials",Unpressurised trunk's parts,Payloads
+2020-084B,SpaceX Crew-1 Dragon trunk,2022-07-08,"-36.573, 148.55",Australia,20,"flat, slightly curved",1050 x 900,"titanium, steel, aluminum, carbon fiber, insulating materials",Unpressurised trunk's parts,Payloads
+2020-084B,SpaceX Crew-1 Dragon trunk,2022-07-08,"-36.495, 148.55",Australia,35,"curved, semi circular",2100 x 750,"titanium, steel, aluminum, carbon fiber, fiberglass, insulating materials",Unpressurised trunk's parts,Payloads
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.641, 73.071",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.573, 73.086",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.566, 73.021",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.548, 72.772",India,,"flat, rectangle",,steel,Fragments,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.651, 72.943",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.560, 73.22",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-080B,Long March 3B Y86 third Stage,2022-05-12,"22.548, 71.486",India,5,hollow sphere,1400,steel,Hydrazine storage tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.312, 79.631",India,50-60,circular,3000 x 200 (wide),"aluminum, steel/iron",,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.293, 79.80",India,7,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.270, 79.734",India,7,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.247, 79.775",India,7,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.245, 79.821",India,7,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.353, 79.777",India,7,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.327, 79.805",India,3,spherical,500,metal,Fuel tank,Rocket Bodies
+2021-010B,Long March 3B Y77 third Stage,2022-04-02,"20.635, 78.951",India,,cylindrical,,,,Rocket Bodies
+2021-126B,Falcon 9 second stage,2022-03-08,"-25.905, -50.38",Brazil,600,cylindrical,4000 x 6000,niobium-titanium alloy,Merlin 1D engine nozzle,Rocket Body
+2019-094A,Atlas V second stage (Centaur aft),2019-12-22,"-38.34, 142.07",Australia,50,cylindrical,1200 x 500,Inconel metal with composite fiber overwrap,High pressure helium bottle,Payload
+2021-017BN,Falcon 9 second stage,2021-03-26,"45.99, -119.8",United States,,,,metal,Fragment,Rocket Bodies
+2021-017BN,Falcon 9 second stage,2021-03-26,"44.42, -124.1",United States,91,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2021-017BN,Falcon 9 second stage,2021-03-26,"46.86, -119.8",United States,91,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2021-017BN,Falcon 9 second stage,2021-03-26,"46.76, -120.0",United States,91,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2021-017BN,Falcon 9 second stage,2021-03-26,"47.05, -120.0",United States,91,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2020-027C,Long March CZ-5B,2020-05-11,"7.06, -4.28",Côte d'Ivoire,50,cylindrical,11000 x 100,aluminum and insulation,Tubing,Rocket Bodies
+2020-027C,Long March CZ-5B,2020-05-11,"6.7, -4.36",Côte d'Ivoire,50,cylindrical,3890 x 100,composites,Tubing,Rocket Bodies
+2020-027C,Long March CZ-5B,2020-05-11,"6.63, -4.58",Côte d'Ivoire,50,cylindrical,500 x 100,metal,Tubing,Rocket Bodies
+2020-027C,Long March CZ-5B,2020-05-11,"8.07, -5.65",Côte d'Ivoire,50,cylindrical,5000 x 100,metal,Tubing,Rocket Bodies
+2020-027C,Long March CZ-5B,2020-05-11,,Côte d'Ivoire,,,,metal,Fragments,Rocket Bodies
+1998-032A,Iridium 70,2018-10-11,"36.15, -119.8",United States,,cylindrical,,titanium,Pressure vessel,Payload
+2017-086D,Zenit-3F (second stage),2018-01-27,"-14.78, -70.1",Peru,40.5,spherical with bosses,646.17,titanium,Pressure vessel,Rocket Bodies
+2017-086D,Zenit-3F (second stage),2018-01-27,"-14.82, -70.06",Peru,16.7,spherical,397.89,titanium,Pressure vessel,Rocket Bodies
+2017-086D,Zenit-3F (second stage),2018-01-27,"-14.84, -70.06",Peru,40.65,spherical with bosses,649.35,titanium,Pressure vessel,Rocket Bodies
+2017-086D,Zenit-3F (second stage),2018-01-27,"-14.7, -70.17",Peru,40.55,spherical with bosses,646.17,titanium,Pressure vessel,Rocket Bodies
+2017-086D,Zenit-3F (second stage),2018-01-27,"-14.82, -70.06",Peru,0.7,flat piece,190 x 780 x 0.5,metal,Pressure vessel,Rocket Bodies
+1971-022A,Agena spacecraft,1971-04-12,"46.138, -98.03",United States,10,spherical,430,,Control gas sphere,Payloads
+1971-022A,Agena spacecraft,1971-04-12,"46.2, -98",United States,10,spherical,65,,Control gas sphere,Payloads
+2007-011B,CZ-3A third stage,2017-07-18,"-0.3, 100.1",Indonesia,7.4,spherical,550,titanium,Pressure vessel,Rocket Body
+,,,"-3.3, 101.8",Indonesia,,,,,Fragment,Unknown Type
+1988-030B,Soyouz-U third stage (Block I),1988-04-16,"-4.9, 104.9",Indonesia,,cylindrical,,titanium,Propellant tank,Rocket Body
+1979-096B,Cosmos-3M second stage (S3M),1981-03-26,"0.6, 122.4",Indonesia,,cylindrical,,titanium,Propellant tank,Rocket Body
+2012-006K,AVUM/LARES A + H/SS,2016-11-02,"10.3, 78",India,,cylindrical,400 x 800,composites,Pressure vessel,Payloads
+2012-006K,AVUM/LARES A + H/SS,2016-11-02,"10.3, 78",India,,,,metal,Fragment,Payloads
+2016-050B,Falcon 9 second stage,2016-09-26,"-7.22, 113.78",Indonesia,,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2016-050B,Falcon 9 second stage,2016-09-26,"-7.22, 113.91",Indonesia,,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2016-050B,Falcon 9 second stage,2016-09-26,"-7.22, 113.78",Indonesia,,cylindrical,600 x 1500,composites,Pressure vessel,Rocket Bodies
+2016-050B,Falcon 9 second stage,2016-09-26,"-7.22, 113.78",Indonesia,,,,,Heat exchanger,Rocket Bodies
+2016-050B,Falcon 9 second stage,2016-09-26,"-7.22, 113.78",Indonesia,,,,,Electronics,Rocket Bodies
+2015-074C,Zenit-3SLFB second stage,2016-01-01,"22.1, 105.2",Vietnam,6,spheric,270,titanium,Pressure vessel,Rocket Bodies
+2015-074C,Zenit-3SLFB second stage,2016-01-01,"22.1, 105.2",Vietnam,0.25,spheric,,titanium,Pressure vessel,Rocket Bodies
+2015-074C,Zenit-3SLFB second stage,2016-01-01,"22.1, 105.2",Vietnam,45,spheric,800,titanium,Pressure vessel,Rocket Bodies
+2008-010B,Atlas V second stage (Centaur),2015-11-03,"38.1, -1.6",Spain,23.2,spheric,660,composites,Pressure vessel,Rocket Bodies
+2008-010B,Atlas V second stage (Centaur),2015-11-03,"38.3, -1.7",Spain,23.7,spheric,660,composites,Pressure vessel,Rocket Bodies
+2008-010B,Atlas V second stage (Centaur),2015-11-03,"38.2, -1.6",Spain,24,spheric,660,composites,Pressure vessel,Rocket Bodies
+2008-010B,Atlas V second stage (Centaur),2015-11-03,"38.45, -0.85",Spain,7.18,flat piece,3540 x 200 x 10,metal,Fragment,Rocket Bodies
+2008-010B,Atlas V second stage (Centaur),2015-11-03,"38.46, -1.83",Spain,19,cylindrical,590 x 860,composites,Tank,Rocket Bodies
+2014-052B,Falcon 9 second stage,2014-12-28,"-21.3, -51.8",Brazil,3,cylindrical,200 x 80,metal,Small ring,Rocket Bodies
+2014-052B,Falcon 9 second stage,2014-12-28,"-21.3, -52.8",Brazil,30,cylindrical,1460 x 560,composites,Pressure vessel,Rocket Bodies
+2014-052B,Falcon 9 second stage,2014-12-28,"-21.3, -51.8",Brazil,30,cylindrical,1460 x 560,composites,Pressure vessel,Rocket Bodies
+2014-037J,Soyouz-2-1B Fregat-M fourth stage,2014-07-10,"-29.6, 148.2",Australia,13.4,spheric,400,titanium,Pressure vessel,Rocket Body
+1975-077B,Delta 2914 second stage (TR-201),2013-07-14,"-20.0, 29.7",Zimbabwe,,cylindrical,1800 x 3000,metal,Propellant tank,Rocket Body
+2012-021C,CZ-4B third stage (L-14B),2013-02-27,"30.5, -94",United States,7.3,spheric,350,Ti6Al4V,Pressure vessel,Rocket Bodies
+2012-021C,CZ-4B third stage (L-14B),2013-02-27,"30.5, -94.0",United States,7.3,spheric,350,Ti6Al4V,Pressure vessel,Rocket Bodies
+2012-021C,CZ-4B third stage (L-14B),2013-02-27,"30.5, -94.0",United States,7.3,spheric,350,Ti6Al4V,Pressure vessel,Rocket Bodies
+2012-021C,CZ-4B third stage (L-14B),2013-02-27,"30.5, -94.0",United States,7.3,spheric,350,Ti6Al4V,Pressure vessel,Rocket Bodies
+,,,"56.9, 13",Sweden,10,spheric,420,,Pressure vessel,Unknown Type
+1997-016C,Ariane 44LP H10 III thrid stage,2012-02-22,"-3.5, -43.1",Brazil,30,spheric,700,titanium,Pressure vessel,Rocket Body
+2011-062B,Soyouz-U third stage (Block I),2011-01-11,"-17.8, 16.4",Namibia,5.9,spheric,350,titanium,Pressure vessel,Rocket Body
+2011-001C,Zenit-3SLBF second stage,2011-03-19,"41, -107.6",United States,36,spheric,760,titanium,Pressure vessel,Rocket Body
+2003-058C,Delta 7925 third stage (PAM-D),2011-03-03,"-30.4, -57.4",Uruguay,,cylindrical,1000 x 2000,titanium,SRM casing,Rocket Body
+2009-038G,ICU Avionics Deck,2010-02-19,"46.6, 103.4",Mongolia,250,cylindrical,1700 x 2700,steel,Propellant tank,Payloads
+2009-038G,ICU Avionics Deck,2010-02-19,"46.6, 103.4",Mongolia,30,spheric,600,titanium,Pressure vessel,Payloads
+2009-038G,ICU Avionics Deck,2010-02-19,"46.6, 103.4",Mongolia,10,spheric,400,titanium,Pressure vessel,Payloads
+1990-051C,Delta 7925 third stage (PAM-D),1990-07-26,"-24.1, 133.7",Australia,,spheric,,,SRM casing,Rocket Body
+2007-046B,Atlas V second stage (Centaur),2008-03-22,"-17.4, -51.1",Brazil,10,spheric,500,composites,Pressure vessel,Rocket Body
+2006-047C,Delta 7925 second stage,2007-11-01,"-26.9, 145",Australia,17,spheric,550,composites,Pressure vessel,Rocket Body
+2000-071C,Delta 7925 third stage (PAM-D),2005-01-13,"13.9, 100.3",Thailand,50,cylindrical,1000 x 2000,titanium,SRM casing,Rocket Body
+2003-032C,Delta 7925H second stage,2004-07-25,"-9.7, -37",Brazil,,,1000,metal,Fragment,Rocket Bodies
+2003-032C,Delta 7925H second stage,2004-07-25,"-9.7, -37",Brazil,30,spheric,500,metal,Pressure vessel,Rocket Bodies
+1994-058A,Telstar 4B,2004-11-13,"-1.4, -48.4",Brazil,,spheric,1000 x 800,,Propellant tank,Payload
+1993-068C,Delta 7925 third stage (PAM-D),2004-01-20,"-28.6, -58.7",Argentina,40,cylindrical,1400 x 1600,titanium,SRM casing,Rocket Body
+1998-014B,Atlas IIAS third stage (Centaur IIA),2003-04-27,"14.5, -90.2",Guatemala,,spheric,1200,composites,Pressure vessel,Rocket Body
+2003-003A,Columbia (STS-107),2003-02-01,"31.3, -93.9",United States,118,spheric,965,composites,Helium pressure vessel,Payloads
+2003-003A,Columbia (STS-107),2003-02-01,"31.5, -94.4",United States,11.8,spheric,460,composites,Helium pressure vessel,Payloads
+2003-003A,Columbia (STS-107),2003-02-01,"31.4, -94.1",United States,32.6,spheric,610,composites,Helium pressure vessel,Payloads
+2003-003A,Columbia (STS-107),2003-02-01,"31.6, -94.5",United States,24,spheric,610,composites,PRSD tank,Payloads
+2003-003A,Columbia (STS-107),2003-02-01,"31.8, -95.4",United States,20.9,flat piece,1830 x 916,composites,Fragment of a door,Payloads
+2003-003A,Columbia (STS-107),2003-02-01,"33.2, -94.5",United States,,,,various materials,Several different fragments,Payloads
+2001-042B,Ariane 44P third stage,2002-08-11,"-11.4, 15.7",Angola,10,spheric,500,,Pressure vessel,Rocket Body
+1985-035C,Ariane 3 third stage (H10),2002-03-27,"-0.3, 31",Uganda,41.8,spheric,660,TA5 ELI,Pressure vessel,Rocket Body
+1993-032C,Delta 7925 third stage (PAM-D),2001-01-12,"23.7, 44.6",Saudi Arabia,67,cylindrical,1240 x 2030,Ti6Al4V,SRM casing,Rocket Body
+2000-063E,Proton-K/DM-2 third stage (Proton-K 8S812),2000-10-14,"37.7, -97.5",United States,,flat piece,180 x 100,metal,Fragment,Rocket Body
+1996-019B,Delta 7925 second stage,2000-04-27,"-33.8, 18.7",South Africa,260,cylindrical,1500 x 2700,stainless steel,Propellant tank,Rocket Bodies
+1996-019B,Delta 7925 second stage,2000-04-27,"-33.6, 19.5",South Africa,33,spheric,580,titanium,Pressure vessel,Rocket Bodies
+1996-019B,Delta 7925 second stage,2000-04-27,"-33.8, 19.9",South Africa,30,cylindrical,300 x 200 x 600,composites,CC,Rocket Bodies
+1996-024B,Delta 7920 second stage,1997-01-22,"36.2, -95.9",United States,,flat piece,50 x 15,lightweight plastic,Fragment,Rocket Bodies
+1996-024B,Delta 7920 second stage,1997-01-22,"30.6, -97.6",United States,32,spheric,580,titanium,Pressure vessel,Rocket Bodies
+1996-024B,Delta 7920 second stage,1997-01-22,"30.6, -97.6",United States,,cylindrical,250 x 760,"aluminium,composites",CC,Rocket Bodies
+1996-024B,Delta 7920 second stage,1997-01-22,"29.7, -97.8",United States,270,cylindrical,1700 x 2700,stainless steel,Propellant tank,Rocket Bodies
+1993-071A,Cosmos-2267,1994-12-28,"24.4, -106.6",Mexico,20,flat piece,2400 x 2400,,Fragment,Payload
+,,,"-35, 118",Australia,6,spheric,300,,Pressure vessel,Unknown Type
+1982-033A,Salyut 7,1991-02-07,"-33.0, -60.4",Argentina,,flat piece,900,metal,Fragment,Payloads
+1982-033A,Salyut 7,1991-02-07,"-30.3, -65.6",Argentina,,flat piece,300 x 100,metal,Fragment,Payloads
+1982-033A,Salyut 7,1991-02-07,"-33.0, -59.0",Argentina,,flat piece,200 x 200,metal,Fragment,Payloads
+1982-033A,Salyut 7,1991-02-07,"-30.3, -65.6",Argentina,,flat piece,3000,metal,Fragment,Payloads
+1982-033A,Salyut 7,1991-02-07,"-30.3, -65.6",Argentina,,cylindrical,,metal,Fragment,Payloads
+1982-033A,Salyut 7,1991-02-07,"-33.3, -61.3",Argentina,,spheric,1000,metal,Tank,Payloads
+1982-033A,Salyut 7,1991-02-07,"-35.6, -64.4",Argentina,,flat piece,2000 x 500,metal,Fragment,Payloads
+1988-110B,Soyouz-U third stage (Block I),1988-12-20,"46.9, 2.4",France,,flat piece,700,,Part of nozzle,Rocket Body
+1988-031A,Foton 1,1988-04-28,"-21.4, 119.8",Australia,,spheric,370,titanium,Pressure vessel,Payload
+1987-086B,Tsyklon-M second stage,1987-10-11,"39.1, -122.9",United States,1.5,flat piece,2100 x 150,metal,Fragment,Rocket Body
+,,,"-35.8, 137.1",Australia,3,spheric,250,metal,Pressure vessel,Unknown Type
+,,,,United States,,flat piece,150 x 70,metal,,Unknown Type
+1979-072B,Delta 2914 second stage (TR-201),1979-08-10,"-17.2, -63.8",Bolivia,6,spheric,700,metal,Pressure vessel,Rocket Bodies
+1979-072B,Delta 2914 second stage (TR-201),1979-08-10,"-17.8, -62.9",Bolivia,6,spheric,700,metal,Pressure vessel,Rocket Bodies
+1973-027A,Skylab 1,1979-07-11,"-33.9, 121.9",Australia,,,,,Charred fragments,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.7, 122.1",Australia,,,,Aluminium 356,Casting,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.8, 122",Australia,,spheric,,,Tank,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.8, 122.1",Australia,,spheric,,,Tank,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.9, 122.1",Australia,,,,,Heat exchanger,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.2, 122.6",Australia,,spheric,,,Pressure vessel,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.5, 122.3",Australia,,,,,Electronics,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.2, 122.6",Australia,,spheric,,,Pressure vessel,Payloads
+1973-027A,Skylab 1,1979-07-11,"-33.9, 122.1",Australia,,spheric,,,,Payloads
+1978-123B,Soyouz-U third stage (Block I),1978-12-31,"52.54, 9.0",Germany,10,nozzle,1100 x 700 x 300,,Nozzle,Rocket Body
+1978-082C,Cosmos-1029 engine,978-09-11,"46.6, 3.6",France,20,nozzle,600 x 580,,Nozzle,Payload
+1977-090A,Cosmos-954 (NPP),1978-01-24,"62.5, -109.4",Canada,18.2,cylindrical,360 x 510,metal,Fragment,Payloads
+1977-090A,Cosmos-954 (NPP),1978-01-24,"61.3, -114.5",Canada,,flat piece,,metal,Fragment,Payloads
+1977-090A,Cosmos-954 (NPP),1978-01-24,"62.5, -109.4",Canada,20,cylindrical,1000,metal,Fragment,Payloads
+1977-090A,Cosmos-954 (NPP),1978-01-24,"62.9, -109.3",Canada,0.051,cylindrical,20 x 100,beryllium,Rods (nuclear radiation),Payloads
+1977-090A,Cosmos-954 (NPP),1978-01-24,"63.5, -111.5",Canada,3.6,cylindrical,100 x 250,beryllium,Rods (nuclear radiation),Payloads
+,,,"-23.1, 132.2",Australia,,spheric,610,titanium,"Helium pressure vessel, large dent",Rocket Body
+,,,"-29.9, 149.8",Australia,,spheric,380,titanium,Pressure vessel,Rocket Bodies
+,,,"-29.9, 149.8",Australia,,spheric,380,titanium,Pressure vessel,Rocket Bodies
+1972-003,unknown,1972-05-20,"52.2, -0.1",United Kingdom,,spheric,300,titanium,Pressure vessel,Unknown Type
+1972-023B,Molniya-M third stage (Block I),1972-04-01,"-44.1, 171.5",New Zealand,15,spheric,380,titanium,Pressure vessel,Rocket Bodies
+1972-023B,Molniya-M third stage (Block I),1972-04-01,"-44.1, 171.5",New Zealand,15,spheric,380,titanium,Pressure vessel,Rocket Bodies
+1972-023B,Molniya-M third stage (Block I),1972-04-01,"-44.4, 170.6",New Zealand,4.3,spheric,250,titanium,Pressure vessel,Rocket Bodies
+1972-023B,Molniya-M third stage (Block I),1972-04-01,"-44.2, 171.5",New Zealand,15,spheric,380,titanium,Pressure vessel,Rocket Bodies
+1972-023B,Molniya-M third stage (Block I),1972-04-01,"-45.9, 171.7",New Zealand,13.6,spheric,380,titanium,Pressure vessel,Rocket Bodies
+,,,"47.6, -100.1",United States,,spheric,,,Pressure vessel,Unknown Type
+,,,"47.6, -100.1",United States,,spheric,,,Pressure vessel,Unknown Type
+,,,"47.6, -100.1",United States,,spheric,,,Pressure vessel,Unknown Type
+1969-108A,Cosmos-316,1970-08-28,"37.7, -98.7",United States,18,long flat piece,640 x 130,metal,Fragment,Payloads
+1969-108A,Cosmos-316,1970-08-28,"37.7, -98.7",United States,18,long flat piece,640 x 130,metal,Fragment,Payloads
+1969-108A,Cosmos-316,1970-08-28,"36.4, -99.5",United States,long flat piece,50,800,metal,Fragment,Payloads
+1969-108A,Cosmos-316,1970-08-28,"35.5, -102.6",United States,290,flat piece,1200 x 1200,metal,Fragment,Payloads
+,,1969-,"63.189, 14.826",Sweden,13.8,spheric,380,metal,Pressure vessel,Unknown Type
+,,,"-19.75, 147.5",Australia,,spheric,609,unknown,Pressure vessel,Unknown Type
+,,1968-09-01,"64.5, -165.4",United States - Alaska,14.5,spheric,370,unknown,Pressure vessel,Rocket Body
+,,1968-08,"3.9, -70.1",Colombia,20,spheric,710,metal,Pressure vessel,Unknown Type
+1968-025A,Apollo 6,1968-04-04,"-11.5, 18.2",Angola,,flat piece,230 x 230,plastic,Fragment,Payload
+1967-083B,Delta G second stage (AJ10-118E),1968-01-19,"-32.6, 149",Australia,29,spheric,600,metal,Pressure vessel,Rocket Body
+1968-022C,Cosmos-208 instrument package,1968-04-06,"28.4, 83.9",Nepal,12.5,cone shape,300 x 1200,,Fragment,Payloads
+1968-022C,Cosmos-208 instrument package,1968-04-06,"28.4, 83.9",Nepal,,flat piece,110,metal,Fragment,Payloads
+1968-022C,Cosmos-208 instrument package,1968-04-06,"28.4, 83.9",Nepal,,unknown,,metal,Fragment,Payloads
+1968-007A,Apollo 5 (LM 1 Ascent Stage),1968-01-24,"6.1, -74.4",Colombia,57.5,flat piece,1000 x 3000,metal,Fragment,Payloads
+1968-007A,Apollo 5 (LM 1 Ascent Stage),1968-01-24,"6.1, -74.4",Colombia,,spheric,900,metal,Fragment,Payloads
+1966-104A,Gemini 12,1966-11-15,"20.4, -98.8",Mexico,,spheric,310,titanium,Tank or pressure vessel,Payloads
+1966-104A,Gemini 12,1966-11-15,"20.4, -98.8",Mexico,,spheric,600,titanium,Tank or pressure vessel,Payloads
+1966-104A,Gemini 12,1966-11-15,"20.4, -98.8",Mexico,,flat piece,,metal,Fragment,Payloads
+1966-096B,Delta E second stage (AJ10-118E),1967-02-09,"27.2, -106.1",Mexico,30,spheric,600,titanium,Pressure vessel,Rocket Bodies
+1966-096B,Delta E second stage (AJ10-118E),1967-02-09,"27.2, -106.1",Mexico,,spheric,355,,Pressure vessel,Rocket Bodies
+,,,,Peru,15.8,spheric,580,metal,Fragment,Unknown Type
+,,,"45.5, -89.7",United States,13,spheric,370,titanium,Pressure vessel,Unknown Type
+1966-062A,KH-7 30 (Gambit-1 3-OPS 1850),1966-07-20,"-26.6, 31.5",Swaziland,5.4,cone shape,,metal,Fragment,Payloads
+1966-062A,KH-7 30 (Gambit-1 3-OPS 1850),1966-07-20,"-26.6, 31.5",Swaziland,,,,,Fragment,Payloads
+1966-062A,KH-7 30 (Gambit-1 3-OPS 1850),1966-07-20,"-9.1, -75.1",Peru,,flat piece,4700 x 2600,metal,Fragment,Payloads
+1966-062A,KH-7 30 (Gambit-1 3-OPS 1850),1966-07-20,"-14.2, 27.6",Zambia,,flat piece,5100 x 3300,aluminium,Fragment,Payloads
+1965-005A,Saturn I second stage (S-IV),1966-04-30,"0, -64",Brazil,,flat piece,500 x 300,metal,Fragment,Rocket Bodies
+1965-005A,Saturn I second stage (S-IV),1966-04-30,"0, -64",Brazil,,oval flat piece,400 x 200,metal,Fragment,Rocket Bodies
+1965-005A,Saturn I second stage (S-IV),1966-04-30,"0, -64",Brazil,,flat piece,120 x 100,metal,Fragment,Rocket Bodies
+1964-004E,Thor Agena B operational debris (Shroud Half),1966-02-23,"-26.7, 132",Australia,,unknown,1500 x 1200,plastics,Plastic shroud fragment,Rocket Body
+1965-099A,Luna 8,1965-12-06,"38.2, -6.2",Spain,,spheric,380,titanium,Pressure vessel,Payloads
+1965-099A,Luna 8,1965-12-06,"37.3, -5.9",Spain,,cylindrical,190 x 360,titanium,CC,Payloads
+1965-099A,Luna 8,1965-12-06,"38.1, -6.2",Spain,,spheric,380,titanium,Pressure vessel,Payloads
+1965-099A,Luna 8,1965-12-06,"37.3, -5.9",Spain,,spheric,250,titanium,Propellant tank,Payloads
+1965-099A,Luna 8,1965-12-06,"37.7, -5.6",Spain,,spheric,380,titanium,Pressure vessel,Payloads
+1965-099A,Luna 8,1965-12-06,"37.3, -5.9",Spain,,spheric,250,titanium,Propellant tank,Payloads
+1965-099A,Luna 8,1965-12-06,"37.3, -5.9",Spain,,cylindrical,,titanium,Motor casing,Payloads
+1965-068A,Gemini 5,1965-08-29,"-29.1, 115",Australia,,spheric,500,titanium,Water tank,Payload
+1965-047A,Titan IIIC dummy payload,1965-06-29,"25.8, 75.4",India,,unknown,,,Fragment,Payload
+1965-026A,KH-4A 18 (Corona 93),1965-04-04,"57.7, 12.9",Sweden,4.16,spheric,310,metal,Pressure vessel,Payload
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,spheric,800,metal,Pressure vessel,Rocket Bodies
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,cylindrical,1150 x 4000,aluminium,Propellant tank,Rocket Bodies
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,flat piece,,,Nozzle fragments,Rocket Bodies
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,flat piece,,,Nozzle fragments,Rocket Bodies
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,flat piece,,,Nozzle fragments,Rocket Bodies
+1964-081A,Titan IIIA third stage (Transtage) + Fairing + Lead Ballast PL,1964-12-10,"-25.3, -64.4",Argentina,,flat piece,,,Nozzle fragments,Rocket Bodies
+1964-022A,KH-4A 5 (Corona 78 - OPS 2921),1964-05-26,"10.7, -71.7",Venezuela,79,spheric,,,Electronics,Payload
+,,1964-03-01,"-1.4, -48.5",Brazil,11,spheric,,metal,Pressure vessel,Unknown Type
+1963-015A,Mercury Atlas 9,1963-05-16,"-31.4, -58.1",Argentina,2.7,flat piece,0.42 x 0.42,steel skin,,Payload
+1963-002A,KH-4 18 (Corona 59 - OPS 0048),1963-01-24,"-33.3, 142",Australia,5.5,spheric,350,,Pressure vessel,Payload
+1962-069A,NNN (00505),1963-01-08,"-33.3, 142",Australia,5.5,spheric,350,,Pressure vessel,Payload
+1962-052A,Mercury Atlas 8,1962-10-03,"9.4, -5.7",Côte d'Ivoire,0.22,,1200 x 900,stainless steel,Fragment,Payloads
+1962-052A,Mercury Atlas 8,1962-10-03,"10.2, -4.1",Burkina Faso,0.22,,1200 x 900,stainless steel,Fragment,Payloads
+1962-052A,Mercury Atlas 8,1962-10-03,"11.7, -2.5",Burkina Faso,0.22,,1200 x 900,stainless steel,Fragment,Payloads
+1960-005A,Korabl-Sputnik 1 (Sputnik 4) propulsion module,1962-09-05,"44.1, -87.6",United States,9.5,cylindrical,150,metal,Fragment,Payload
+,,,,Brazil,,400,spheric,,Pressure vessel,Unknown type
+1962-003A,Mercury Atlas 6,1962-02-20,"-30.5, 26.8",South Africa,3.12,flat piece,1140 x 960 x 3.5,stainless steel,Propellant tank,Payloads
+1962-003A,Mercury Atlas 6,1962-02-20,"-30.5, 26.8",South Africa,3.12,spheric,558,Ti6Al4V,Helium pressure vessel,Payloads
+1962-003A,Mercury Atlas 6,1962-02-20,"-30.5, 26.8",South Africa,3.12,flat piece,4064 x 200 x 1.1,stainless steel,Fragment,Payloads
+1962-003A,Mercury Atlas 6,1962-02-20,"-30.5, 26.8",South Africa,3.12,flat piece,1016 x 1143 x 3.5,stainless steel,Propellant tank,Payloads

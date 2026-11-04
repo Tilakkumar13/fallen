@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fallen</title>
+<meta name="description" content="Live map of satellites and rocket bodies coming back to Earth: where each one can fall, who lives under its path, and what has already reached the ground.">
+<meta property="og:title" content="Fallen">
+<meta property="og:description" content="Satellites and rocket bodies coming back to Earth: where each can fall, who lives under its path, and what has already reached the ground.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600;62..125,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Layout: full-bleed live map, a control bar on top, one side panel (bottom sheet on phones) */
+:root {
+  --bg: #0b1015; --panel: #11181f; --panel2: #18212a; --ink: #e6ecf1; --muted: #8e9ba7; --rule: #26313b;
+  --fall: #ff9b3d; --fall-dim: #7a4a1c; --sat: #7fb2ee; --found: #f2f5f7; --press: #ff9b3d;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif; --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--ink); font: 400 14px/1.5 var(--body); }
+#map { position: fixed; inset: 0; background: var(--bg); }
+.leaflet-container { background: var(--bg); font: inherit; }
+.leaflet-control-attribution { background: rgba(11,16,21,.7) !important; color: var(--muted) !important; font-size: 10px; }
+.leaflet-control-attribution a { color: var(--muted) !important; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--panel2); color: var(--ink); border-radius: 8px; }
+.leaflet-popup-content { margin: 12px 14px; font-size: 13px; line-height: 1.45; }
+.leaflet-popup-content a { color: var(--sat); }
+a { color: var(--sat); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--sat); outline-offset: 2px; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+header { position: fixed; z-index: 1000; top: 0; left: 0; right: 0; display: flex; gap: 10px 18px; align-items: center; flex-wrap: wrap;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(var(--bg), rgba(11,16,21,.82) 70%, rgba(11,16,21,0)); pointer-events: none; }
+header > * { pointer-events: auto; }
+.brand { font: 800 22px/1 var(--display); font-stretch: 72%; letter-spacing: .04em; text-transform: uppercase; }
+.brand span { color: var(--fall); }
+.clock { font: 500 12px var(--mono); color: var(--muted); }
+.toggles { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+.tg { display: inline-flex; gap: 7px; align-items: center; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--rule); background: var(--panel); cursor: pointer; font-size: 12.5px; color: var(--muted); }
+.tg[aria-pressed="true"] { color: var(--ink); border-color: #3a4855; }
+.tg i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+
+aside { position: fixed; z-index: 1000; top: calc(64px + env(safe-area-inset-top, 0px)); left: max(12px, env(safe-area-inset-left, 0px)); bottom: 12px; width: 380px;
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+.tabs { display: flex; border-bottom: 1px solid var(--rule); flex: none; }
+.tabs button { flex: 1; padding: 11px 6px; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-weight: 500; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--fall); }
+.view { overflow-y: auto; flex: 1; min-height: 0; }
+.note { padding: 12px 16px; color: var(--muted); font-size: 12.5px; border-bottom: 1px solid var(--rule); }
+.list { list-style: none; margin: 0; padding: 0; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 11px 16px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+.item:hover, .item.sel { background: var(--panel2); }
+.item .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item .when { font: 500 12.5px var(--mono); text-align: right; color: var(--fall); white-space: nowrap; }
+.item .sub { grid-column: 1 / -1; color: var(--muted); font-size: 12.5px; }
+.tag { display: inline-block; font: 500 10.5px var(--mono); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--rule); color: var(--muted); margin-right: 6px; text-transform: uppercase; letter-spacing: .04em; }
+.tag.rb { color: var(--fall); border-color: var(--fall-dim); }
+
+.detail { padding: 16px; }
+.back { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0; margin-bottom: 10px; font-size: 13px; }
+.detail h2 { font: 800 26px/1.05 var(--display); font-stretch: 78%; margin: 0; overflow-wrap: anywhere; }
+.meta { color: var(--muted); font-size: 12.5px; margin: 6px 0 14px; }
+.count { background: var(--panel2); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+.count b { display: block; font: 500 22px/1.2 var(--mono); color: var(--fall); }
+.count span { color: var(--muted); font-size: 12.5px; }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; margin: 0 0 14px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; text-align: right; font-family: var(--mono); }
+h3 { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 18px 0 8px; }
+.big { font: 800 30px/1 var(--display); font-stretch: 80%; }
+.ctry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; font-size: 13px; }
+.ctry .bar { grid-column: 1 / -1; height: 3px; background: var(--rule); border-radius: 2px; margin-bottom: 4px; }
+.ctry .bar i { display: block; height: 100%; background: var(--fall); border-radius: 2px; }
+.src { font-size: 12.5px; color: var(--muted); }
+.src a { display: inline-block; margin-right: 12px; }
+.prose { padding: 16px; } .prose p { margin: 0 0 12px; } .prose h2 { font: 800 24px/1.1 var(--display); font-stretch: 80%; margin: 0 0 10px; }
+.stat { display: grid; grid-template-columns: 6ch minmax(0, 1fr); gap: 12px; padding: 9px 0; border-top: 1px solid var(--rule); align-items: baseline; }
+.stat b { font: 500 22px var(--mono); color: var(--fall); }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); padding: 10px 16px; border-top: 1px solid var(--rule); flex: none; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.sw { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+.hide-panel { display: none; }
+.loading { padding: 20px 16px; color: var(--muted); }
+
+@media (max-width: 760px) {
+  aside { top: auto; left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px)); width: auto; height: 46vh; }
+  .toggles { margin-left: 0; width: 100%; }
+  .tg { padding: 5px 9px; }
+  .legend { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="map" role="application" aria-label="World map of satellites, objects coming down and debris found on the ground"></div>
+<header>
+  <div class="brand">Fallen<span>.</span></div>
+  <div class="clock num" id="clock">—</div>
+  <div class="toggles" role="group" aria-label="Map layers">
+    <button class="tg" id="tg-sky" aria-pressed="true"><i style="background:var(--sat)"></i>Satellites <span class="num" id="n-sky"></span></button>
+    <button class="tg" id="tg-fall" aria-pressed="true"><i style="background:var(--fall)"></i>Coming down <span class="num" id="n-fall"></span></button>
+    <button class="tg" id="tg-found" aria-pressed="true"><i style="background:var(--found)"></i>Found on the ground <span class="num" id="n-found"></span></button>
+  </div>
+</header>
+<aside>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-down" aria-selected="true">Coming down</button>
+    <button role="tab" id="t-found" aria-selected="false">Fallen</button>
+    <button role="tab" id="t-about" aria-selected="false">About</button>
+  </div>
+  <div class="view" id="v-down"><div class="loading">Loading orbits…</div></div>
+  <div class="view hide-panel" id="v-found"></div>
+  <div class="view hide-panel" id="v-about"></div>
+  <div class="legend" id="legend">
+    <span><i class="sw" style="background:var(--fall)"></i>Possible path</span>
+    <span><i class="sw" style="background:var(--fall-dim)"></i>Can reach these latitudes</span>
+    <span><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="var(--found)"/></svg>Found (ESA)</span>
+    <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--press)" stroke-width="2"/></svg>Found (local news)</span>
+  </div>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const big = (n) => n >= 1e9 ? (n / 1e9).toFixed(1) + " billion" : n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + " million" : n >= 1e3 ? Math.round(n / 1e3) + " thousand" : String(Math.round(n));
+const TYPES = { "PAY": "satellite", "R/B": "rocket body", "DEB": "debris" };
+const OWN = { US: "United States", PRC: "China", CIS: "Russia/USSR", ESA: "ESA", JPN: "Japan", IND: "India", FR: "France", UK: "United Kingdom", SES: "SES", ORB: "Orbcomm", GLOB: "Globalstar", IRID: "Iridium", ISS: "ISS partners" };
+
+// ---------------------------------------------------------------- map
+const map = L.map("map", { worldCopyJump: true, minZoom: 2, maxZoom: 8, zoomControl: false, attributionControl: true }).setView([18, 20], 2);
+L.control.zoom({ position: "bottomright" }).addTo(map);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png", {
+  subdomains: "abcd", maxZoom: 8, attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a> © <a href="https://carto.com/">CARTO</a> · orbits CelesTrak · predictions The Aerospace Corporation · population JRC GHS-POP · finds ESA'
+}).addTo(map);
+const labels = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png", { subdomains: "abcd", maxZoom: 8, pane: "shadowPane" }).addTo(map);
+const gCountries = L.layerGroup().addTo(map), gPath = L.layerGroup().addTo(map), gFound = L.layerGroup().addTo(map), gNow = L.layerGroup().addTo(map);
+
+// satellites on one canvas, redrawn every second
+const SkyLayer = L.Layer.extend({
+  onAdd(m) { this._c = L.DomUtil.create("canvas", ""); this._c.style.position = "absolute"; this._c.style.pointerEvents = "none";
+    m.getPanes().overlayPane.appendChild(this._c); m.on("moveend zoomend resize viewreset", this.reset, this); this.reset(); },
+  onRemove(m) { this._c.remove(); m.off("moveend zoomend resize viewreset", this.reset, this); },
+  reset() { const s = map.getSize(), tl = map.containerPointToLayerPoint([0, 0]); L.DomUtil.setPosition(this._c, tl);
+    const r = devicePixelRatio || 1; this._c.width = s.x * r; this._c.height = s.y * r; this._c.style.width = s.x + "px"; this._c.style.height = s.y + "px"; this.draw(); },
+  draw() { const c = this._c; if (!c) return; const g = c.getContext("2d"), r = devicePixelRatio || 1; g.setTransform(r, 0, 0, r, 0, 0);
+    g.clearRect(0, 0, c.width, c.height); const w = map.getSize().x;
+    if (showSky) { g.fillStyle = css("--sat"); g.globalAlpha = .55;
+      for (const p of skyPos) { if (!p) continue; for (const dx of [-360, 0, 360]) { const q = map.latLngToContainerPoint([p[0], p[1] + dx]); if (q.x > -2 && q.x < w + 2) g.fillRect(q.x - .9, q.y - .9, 1.8, 1.8); } } }
+    g.globalAlpha = 1;
+    if (showFall) for (const o of LIVE) { const p = o._pos; if (!p) continue;
+      for (const dx of [-360, 0, 360]) { const q = map.latLngToContainerPoint([p[0], p[1] + dx]); if (q.x < -10 || q.x > w + 10) continue;
+        g.beginPath(); g.arc(q.x, q.y, o === sel ? 6 : 3.6, 0, 7); g.fillStyle = css("--fall"); g.fill();
+        if (o === sel) { g.lineWidth = 2; g.strokeStyle = "#fff"; g.stroke(); } } }
+  }
+});
+let SKY = [], skyPos = [], LIVE = [], HIST = null, WORLD = null, sel = null, showSky = true, showFall = true, showFound = true;
+const sky = new SkyLayer().addTo(map);
+
+function subpoint(rec, when) {
+  const pv = satellite.propagate(rec, when); if (!pv || !pv.position) return null;
+  const gd = satellite.eciToGeodetic(pv.position, satellite.gstime(when));
+  return [satellite.degreesLat(gd.latitude), satellite.degreesLong(gd.longitude), gd.height];
+}
+function tick() {
+  const now = new Date();
+  $("clock").textContent = now.toISOString().slice(0, 19).replace("T", " ") + " UTC";
+  skyPos = SKY.map(s => subpoint(s, now));
+  for (const o of LIVE) o._pos = subpoint(o._rec, now);
+  sky.draw();
+  if (sel && sel._pos) { gNow.clearLayers(); }
+  document.querySelectorAll("[data-cd]").forEach(el => el.textContent = countdown(LIVE[+el.dataset.cd]));
+}
+function countdown(o) {
+  const t = Date.parse(o.t0), h = o.half_h * 3600e3, now = Date.now();
+  if (now > t + h) return "window passed";
+  if (now > t - h) return "window open";
+  const d = t - now, H = Math.floor(d / 3600e3), M = Math.floor(d % 3600e3 / 60e3);
+  return H >= 48 ? `in ${Math.round(H / 24)} days` : `in ${H} h ${String(M).padStart(2, "0")} m`;
+}
+const whenText = (o) => { const t = new Date(o.t0); return t.toISOString().slice(0, 16).replace("T", " ") + " UTC ± " + (o.half_h >= 24 ? (o.half_h / 24).toFixed(1) + " days" : o.half_h + " h"); };
+
+// ---------------------------------------------------------------- views
+function tab(which) {
+  for (const k of ["down", "found", "about"]) { $("t-" + k).setAttribute("aria-selected", k === which); $("v-" + k).classList.toggle("hide-panel", k !== which); }
+}
+["down", "found", "about"].forEach(k => $("t-" + k).addEventListener("click", () => tab(k)));
+
+function listView() {
+  sel = null; gPath.clearLayers(); gCountries.clearLayers(); sky.draw();
+  const v = $("v-down");
+  v.innerHTML = `<div class="note">Satellites and rocket bodies expected to re-enter, soonest first. Updated <span class="num">${esc(window.UPDATED || "")}</span>. Pick one to see where it can fall.</div>
+    <ul class="list">${LIVE.map((o, i) => `<li class="item" tabindex="0" data-i="${i}">
+      <span class="nm"><span class="tag ${o.type === "R/B" ? "rb" : ""}">${esc(TYPES[o.type] || o.type || "object")}</span>${esc(o.name)}</span>
+      <span class="when" data-cd="${i}">${countdown(o)}</span>
+      <span class="sub">${o.exposure.mode === "path" ? `${big(o.exposure.people)} people under its possible path` : `Anywhere between ${o.exposure.lat_limit}° N and S`} · ${esc(OWN[o.owner] || o.owner || "")}</span></li>`).join("")}</ul>`;
+  v.querySelectorAll(".item").forEach(li => { const go = () => detail(LIVE[+li.dataset.i]);
+    li.addEventListener("click", go); li.addEventListener("keydown", e => { if (e.key === "Enter") go(); }); });
+}
+
+function splitTrack(track) {
+  const segs = [[]];
+  for (let k = 0; k < track.length; k++) {
+    if (k && Math.abs(track[k][1] - track[k - 1][1]) > 180) segs.push([]);
+    segs[segs.length - 1].push(track[k]);
+  }
+  return segs;
+}
+function detail(o) {
+  sel = o; tab("down"); gPath.clearLayers(); gCountries.clearLayers();
+  const e = o.exposure, lim = e.mode === "band" ? e.lat_limit : Math.min(o.inc, 180 - o.inc);
+  for (const s of [lim, -lim]) L.polyline([[s, -540], [s, 540]], { color: css("--fall-dim"), weight: 1.5, dashArray: "6 6", interactive: false }).addTo(gPath);
+  if (e.mode === "path") for (const seg of splitTrack(e.track)) L.polyline(seg, { color: css("--fall"), weight: 2.2, opacity: .9, interactive: false }).addTo(gPath);
+  // countries under the path
+  const val = {}; let vmax = 0;
+  for (const c of e.countries) { const v = e.mode === "path" ? c.people : c.share; val[c.n3] = v; vmax = Math.max(vmax, v); }
+  if (WORLD) L.geoJSON(WORLD, { interactive: false, filter: f => val[f.id] > 0,
+    style: f => ({ fillColor: css("--fall"), fillOpacity: .12 + .5 * Math.sqrt(val[f.id] / vmax), color: css("--fall"), weight: .6, opacity: .7 }) }).addTo(gCountries);
+  const owner = OWN[o.owner] || o.owner || "unknown";
+  const rows = e.countries.slice(0, 12).map(c => { const v = e.mode === "path" ? c.people : c.share;
+    return `<span>${esc(c.name)}</span><span class="num">${e.mode === "path" ? big(c.people) : (c.share * 100).toFixed(1) + "%"}</span><span class="bar"><i style="width:${(100 * v / vmax).toFixed(1)}%"></i></span>`; }).join("");
+  const found = HIST ? HIST.points.filter(p => e.countries.some(c => c.n3 === p.n3)) : [];
+  $("v-down").innerHTML = `<div class="detail">
+    <button class="back" id="back">← All objects coming down</button>
+    <h2>${esc(o.name)}</h2>
+    <p class="meta">${esc(TYPES[o.type] || o.type || "object")} · ${esc(owner)} · launched ${esc(o.launch || "?")} · NORAD ${o.norad}${o.cospar ? " · " + esc(o.cospar) : ""}</p>
+    <div class="count"><b data-cd="${LIVE.indexOf(o)}">${countdown(o)}</b><span>Predicted re-entry ${whenText(o)}<br>Source: ${o.source.url ? `<a href="${esc(o.source.url)}" target="_blank" rel="noopener">${esc(o.source.label)}</a>` : esc(o.source.label)}</span></div>
+    <dl class="kv"><dt>Lowest point of orbit</dt><dd>${o.perigee} km</dd><dt>Inclination</dt><dd>${o.inc}°</dd>
+      <dt>Path over land</dt><dd>${Math.round(e.land_share * 100)}%</dd></dl>
+    ${e.mode === "path"
+      ? `<h3>Who lives under its possible path</h3><div class="big num">${big(e.people)}</div><p class="src">people within ${e.swath_km} km of every place it passes over during the window, in ${e.n_countries} countries.</p>`
+      : `<h3>Where it can fall</h3><div class="big">${lim}° N to ${lim}° S</div><p class="src">The window is still days wide, so it could come down at any longitude in this band. Shares show where people under the band live, weighted by how long the orbit spends at each latitude.</p>`}
+    <div class="ctry">${rows}</div>
+    <h3>Debris already found in these countries</h3>
+    <p class="src">${found.length ? `${found.length} recorded finds. <a href="#" id="showfound">Show them</a>` : "None on record."}</p>
+    <h3>Sources</h3>
+    <p class="src"><a href="${o.links.celestrak}" target="_blank" rel="noopener">CelesTrak catalogue</a><a href="${o.links.aerospace}" target="_blank" rel="noopener">Aerospace Corp.</a><a href="${o.links.n2yo}" target="_blank" rel="noopener">N2YO live</a></p>
+    <p class="src">Most of a re-entering object burns up. Dense parts like tanks and engines can survive; only those are a risk on the ground.</p>
+  </div>`;
+  $("back").onclick = () => listView();
+  const sf = $("showfound"); if (sf) sf.onclick = (ev) => { ev.preventDefault(); tab("found"); foundView(e.countries.map(c => c.n3)); };
+  if (o._pos) map.flyTo([o._pos[0], o._pos[1]], Math.max(map.getZoom(), 2), { duration: .8 });
+  sky.draw();
+}
+
+function foundView(only) {
+  const pts = HIST.points.filter(p => !only || only.includes(p.n3)).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  $("v-found").innerHTML = `<div class="note">${only ? `Finds in the countries under the selected path. <a href="#" id="allf">Show all</a>` : "Every recovered re-entry fragment on ESA's list, plus finds reported only in local-language news."} ${pts.length} events.</div>
+    <ul class="list">${pts.map((p, i) => `<li class="item" tabindex="0" data-lat="${p.lat}" data-lon="${p.lon}">
+      <span class="nm">${p.src !== "ESA" ? '<span class="tag rb">local news</span>' : ""}${esc(p.name)}</span><span class="when" style="color:var(--muted)">${esc((p.date || "").slice(0, 4))}</span>
+      <span class="sub">${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""} · ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}</span></li>`).join("")}</ul>`;
+  const a = $("allf"); if (a) a.onclick = (ev) => { ev.preventDefault(); foundView(); };
+  $("v-found").querySelectorAll(".item").forEach(li => li.addEventListener("click", (ev) => { if (ev.target.tagName === "A") return; map.flyTo([+li.dataset.lat, +li.dataset.lon], 5, { duration: .8 }); }));
+}
+function foundLayer() {
+  gFound.clearLayers(); if (!showFound) return;
+  for (const p of HIST.points) { if (p.lat == null) continue;
+    const m = L.circleMarker([p.lat, p.lon], p.src === "ESA" ? { radius: 3.5, color: "#0b1015", weight: 1, fillColor: css("--found"), fillOpacity: .9 } : { radius: 5, color: css("--press"), weight: 2, fillOpacity: 0 });
+    m.bindPopup(`<b>${esc(p.name)}</b><br>${esc(p.date || "")} · ${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""}${p.conf ? `<br>Evidence: ${esc(p.conf)}` : ""}<br>${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}`);
+    m.addTo(gFound); }
+}
+function aboutView() {
+  const s = HIST.summary;
+  $("v-about").innerHTML = `<div class="prose">
+    <h2>What falls, and who notices</h2>
+    <p>Fallen tracks satellites and rocket bodies on their way back down, shows every stretch of ground each one could cross in its prediction window, and counts the people who live under it.</p>
+    <div class="stat"><b>${Math.round(s.high_income_share_events * 100)}%</b><span>of debris found on the ground is recorded in high-income countries</span></div>
+    <div class="stat"><b>${Math.round(s.high_income_share_exposure * 100)}%</b><span>of the exposure those same orbits put over people is in high-income countries</span></div>
+    <div class="stat"><b>${s.gdp_factor_10x}×</b><span>more recorded finds for a country ten times richer, at equal exposure (${s.events} events since 1962)</span></div>
+    <p style="margin-top:14px">The record of what has reached the ground mostly shows who looks and reports, not where debris falls. Searching local-language news turned up finds in Indonesia, Thailand, Uganda and Kazakhstan that ESA's list does not include.</p>
+    <h2 style="margin-top:20px">How it works</h2>
+    <p>Orbits: CelesTrak, refreshed every few hours. Prediction windows: The Aerospace Corporation where they have one, otherwise our own rough estimate (SGP4 with the orbit's drag term, ±20% of the time left). A path is drawn when the window is under 12 hours either side; before that the object could fall anywhere between its inclination limits.</p>
+    <p>People: JRC GHS-POP 2020 on a 0.25° grid, counted within 50 km of the path. Finds: ESA's recovered debris list (snapshot 24 Oct 2026) plus a 16-language news search.</p>
+    <p class="src">Not an official warning service. For decisions, use your national space agency or ESA's re-entry service.</p>
+    <p class="src">Made by Tilak Kumar · <a href="https://github.com/Tilakkumar13/fallen" target="_blank" rel="noopener">code and data</a></p></div>`;
+}
+
+// ---------------------------------------------------------------- toggles
+function toggle(btn, fn) { $(btn).addEventListener("click", () => { const on = $(btn).getAttribute("aria-pressed") !== "true"; $(btn).setAttribute("aria-pressed", on); fn(on); }); }
+toggle("tg-sky", on => { showSky = on; sky.draw(); });
+toggle("tg-fall", on => { showFall = on; sky.draw(); on ? (sel && detail(sel)) : (gPath.clearLayers(), gCountries.clearLayers()); });
+toggle("tg-found", on => { showFound = on; foundLayer(); });
+
+// ---------------------------------------------------------------- load
+(async () => {
+  try {
+    const [tle, live, hist, world] = await Promise.all([fetch("data/sky.tle").then(r => r.text()), fetch("data/live.json").then(r => r.json()),
+      fetch("data/history.json").then(r => r.json()), fetch("data/world.json").then(r => r.json())]);
+    const L3 = tle.split(/\r?\n/).filter(Boolean);
+    for (let i = 0; i + 2 < L3.length; i += 3) { try { SKY.push(satellite.twoline2satrec(L3[i + 1], L3[i + 2])); } catch (e) {} }
+    LIVE = live.objects.filter(o => Date.now() < Date.parse(o.t0) + o.half_h * 3600e3 + 6 * 3600e3);
+    LIVE.forEach(o => o._rec = satellite.twoline2satrec(o.tle[0], o.tle[1]));
+    window.UPDATED = live.updated.replace("T", " ").slice(0, 16) + " UTC";
+    HIST = hist; WORLD = topojson.feature(world, world.objects.countries);
+    $("n-sky").textContent = SKY.length.toLocaleString("en"); $("n-fall").textContent = LIVE.length; $("n-found").textContent = HIST.points.length;
+    listView(); foundView(); foundLayer(); aboutView(); tick(); setInterval(tick, 1000);
+    const want = new URLSearchParams(location.search).get("norad"); const o = want && LIVE.find(x => String(x.norad) === want); if (o) detail(o);
+  } catch (e) { $("v-down").innerHTML = `<div class="loading">Couldn't load the orbit data (${esc(e.message)}). Reload the page to try again.</div>`; }
+})();
+</script>
+</body>
+</html>
