@@ -207,6 +207,14 @@ a { color: var(--link-dark); text-decoration: none; } a:hover { text-decoration:
 .acc .empty { margin-top: 40px; border-radius: 28px; background: var(--card-dark); padding: 32px; color: var(--on-dark-2); font-size: 19px; }
 @media (max-width: 760px) { .acc .stats { grid-template-columns: minmax(0, 1fr); } }
 
+.maker { display: flex; align-items: center; gap: 28px; max-width: 760px; margin: 90px auto 0; padding: 30px 36px; background: var(--white); border-radius: 28px; }
+.maker img { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; flex: none; }
+.maker p { margin: 0; }
+.maker .by { color: #86868b; font-size: 15px; }
+.maker .nm { font-size: 30px; line-height: 1.15; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.maker .rl { color: var(--ink-2); font-size: 16px; margin-top: 4px; }
+.maker .lk { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 10px; font-size: 16px; }
+@media (max-width: 734px) { .maker { flex-direction: column; text-align: center; padding: 28px 22px; } .maker .lk { justify-content: center; } }
 footer { border-top: 1px solid var(--line-dark); padding-block: 26px 50px; font-size: 12px; color: #86868b; }
 footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
 
@@ -319,12 +327,21 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
       <div><p class="k">Windows</p><h3>An honest path.</h3><p>Re-entry times come from The Aerospace Corporation where they publish one. A prediction is hours wide, so we draw every stretch of ground it could cross, never a single pin.</p></div>
       <div><p class="k">People</p><h3>Who lives under it.</h3><p>JRC GHS-POP 2020 population, counted within 50 km of the path. Finds on the ground from ESA's recovered-debris list and a 16-language news search.</p></div>
     </div>
+    <div class="maker" id="maker">
+      <img src="tilak.jpg" alt="Tilak Kumar" width="112" height="112" loading="lazy">
+      <div>
+        <p class="by">Made by</p>
+        <p class="nm">Tilak Kumar</p>
+        <p class="rl">MSc Geospatial Technologies, Institute for Geoinformatics, University of Münster</p>
+        <p class="lk"><a class="more" href="https://tilakkumar13.github.io/">Portfolio</a><a class="more" href="https://www.linkedin.com/in/tilak-kumar-726201262/">LinkedIn</a><a class="more" href="https://github.com/Tilakkumar13">GitHub</a></p>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer><div class="wide"><div class="row">
   <span>Orbits CelesTrak · predictions The Aerospace Corporation · population JRC GHS-POP 2020 · finds ESA · map Natural Earth. Not an official warning service.</span>
-  <span>Made by Tilak Kumar · <a href="https://github.com/Tilakkumar13/fallen">Code and data</a></span>
+  <span>Made by <a href="https://tilakkumar13.github.io/">Tilak Kumar</a> · <a href="https://github.com/Tilakkumar13/fallen">Code and data</a></span>
 </div></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/Cesium.js"></script>
