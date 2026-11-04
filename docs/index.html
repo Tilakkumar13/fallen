@@ -8,6 +8,13 @@
 <meta property="og:title" content="Fallen">
 <meta property="og:description" content="Everything coming back from orbit: where it can land, who lives underneath, and what has already reached the ground.">
 <meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tilakkumar13.github.io/fallen/">
+<meta property="og:image" content="https://tilakkumar13.github.io/fallen/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tilakkumar13.github.io/fallen/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23ff8a3d' stroke-width='2.4'/%3E%3Cpath d='M7 25 L22 10' stroke='%23ffd8a8' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='10' r='3' fill='%23ff8a3d'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>window.CESIUM_BASE_URL = "https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/";</script>
@@ -156,8 +163,50 @@ a { color: var(--link-dark); text-decoration: none; } a:hover { text-decoration:
 .how { padding-block: 120px; }
 .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 56px; }
 .steps h3 { font-size: 24px; margin: 0 0 8px; letter-spacing: -.01em; }
-.steps p { color: var(--on-dark-2); margin: 0; font-size: 17px; }
+.steps p { color: var(--ink-2); margin: 0; font-size: 17px; }
 .steps .k { font-size: 14px; font-weight: 600; color: var(--fire); margin-bottom: 10px; }
+/* extras */
+.search { position: relative; padding: 10px 10px 0; flex: none; display: flex; gap: 8px; }
+.search input { flex: 1; min-width: 0; border: 0; border-radius: 10px; padding: 9px 12px; background: rgba(255,255,255,.08); color: var(--on-dark); font: 400 14px var(--sans); }
+.search input::placeholder { color: #8e8e93; }
+.search input:focus { outline: 2px solid rgba(41,151,255,.6); }
+.me { border: 0; border-radius: 10px; padding: 0 12px; background: rgba(255,138,61,.16); color: var(--fire); font: 600 13px var(--sans); cursor: pointer; white-space: nowrap; }
+.res { position: absolute; z-index: 5; left: 10px; right: 10px; top: 52px; background: rgba(36,36,38,.98); border-radius: 12px; box-shadow: 0 14px 40px rgba(0,0,0,.5); max-height: 320px; overflow-y: auto; padding: 6px; }
+.res button { display: flex; width: 100%; justify-content: space-between; gap: 10px; text-align: left; border: 0; background: none; color: var(--on-dark); padding: 9px 10px; border-radius: 8px; cursor: pointer; font: 400 14px var(--sans); }
+.res button:hover, .res button:focus { background: rgba(255,255,255,.08); }
+.res small { color: #8e8e93; font-family: var(--mono); }
+.fresh { display: inline-flex; gap: 6px; align-items: center; }
+.fresh i { width: 7px; height: 7px; border-radius: 50%; background: #30d158; display: inline-block; }
+.fresh.stale i { background: var(--fire); } .fresh.stale { color: var(--fire); }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
+.tool { border: 0; border-radius: 980px; padding: 7px 14px; background: rgba(255,255,255,.1); color: var(--on-dark); font: 500 13px var(--sans); cursor: pointer; }
+.tool[aria-pressed="true"] { background: var(--fire); color: #000; }
+.scrub { background: rgba(255,255,255,.05); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
+.scrub label { display: flex; justify-content: space-between; font-size: 12.5px; color: #8e8e93; margin-bottom: 8px; gap: 8px; }
+.scrub output { color: var(--on-dark); font-family: var(--mono); }
+.scrub input { width: 100%; accent-color: var(--fire); }
+.tip { position: absolute; z-index: 1001; pointer-events: none; background: rgba(28,28,30,.94); color: var(--on-dark); border-radius: 10px; padding: 7px 10px; font-size: 12.5px; line-height: 1.4; white-space: nowrap; }
+.tip small { color: #8e8e93; font-family: var(--mono); }
+.loader { position: absolute; inset: 0; z-index: 1500; display: grid; place-items: center; background: #000; color: #8e8e93; font-size: 14px; transition: opacity .6s var(--ease); }
+.loader.done { opacity: 0; pointer-events: none; }
+.loader span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; background: var(--fire); animation: pulse 1.6s infinite; vertical-align: -1px; }
+.under { margin: 0 8px 10px; padding: 14px; border-radius: 14px; background: rgba(255,138,61,.1); font-size: 14px; }
+.under b { display: block; font-size: 17px; margin-bottom: 4px; }
+.under ul { margin: 8px 0 0; padding-left: 18px; color: #d2d2d7; }
+.under .x { float: right; border: 0; background: none; color: #8e8e93; cursor: pointer; font-size: 16px; }
+.acc { padding-block: 120px; }
+.acc .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 50px; }
+.acc .st { border-radius: 28px; background: var(--card-dark); padding: 32px; min-width: 0; }
+.acc .st .n { font-size: clamp(44px, 5.4vw, 72px); font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.acc .st p { color: var(--on-dark-2); margin: 12px 0 0; font-size: 17px; }
+.acc table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 15px; min-width: 620px; }
+.acc .tw { overflow-x: auto; }
+.acc th, .acc td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line-dark); }
+.acc th { color: #86868b; font-weight: 500; font-size: 13px; }
+.acc .ok { color: #30d158; } .acc .miss { color: var(--fire); }
+.acc .empty { margin-top: 40px; border-radius: 28px; background: var(--card-dark); padding: 32px; color: var(--on-dark-2); font-size: 19px; }
+@media (max-width: 760px) { .acc .stats { grid-template-columns: minmax(0, 1fr); } }
+
 footer { border-top: 1px solid var(--line-dark); padding-block: 26px 50px; font-size: 12px; color: #86868b; }
 footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
 
@@ -179,7 +228,7 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
 <body>
 <nav class="gnav" aria-label="Fallen"><div class="in">
   <a class="brand" href="#top"><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="#ff8a3d" stroke-width="1.6"/><path d="M3 15 L14 4" stroke="#ffd8a8" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="4" r="2" fill="#ff8a3d"/></svg>Fallen</a>
-  <div class="links"><a href="#next">Coming down</a><a href="#ground">On the ground</a><a href="#how">How it works</a><a class="keep pill" style="padding:5px 12px;font-size:12px" href="#live">Live map</a></div>
+  <div class="links"><a href="#next">Coming down</a><a href="#ground">On the ground</a><a href="#accuracy">Track record</a><a href="#how">How it works</a><a class="keep pill" style="padding:5px 12px;font-size:12px" href="#live">Live map</a></div>
 </div></nav>
 
 <header class="hero" id="top">
@@ -221,6 +270,8 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
         <button class="tg" id="tg-found" aria-pressed="true"><i style="background:#fff"></i>Found on the ground <span class="num" id="n-found"></span></button>
       </div>
       <div class="panel">
+        <div class="search"><input id="q" type="search" placeholder="Search any satellite" autocomplete="off" aria-label="Search satellites by name or NORAD number"><button class="me" id="me">Am I under one?</button>
+          <div class="res hide" id="res" role="listbox"></div></div>
         <div class="tabs" role="tablist"><button role="tab" id="t-down" aria-selected="true">Coming down</button><button role="tab" id="t-found" aria-selected="false">Fallen</button></div>
         <div class="view" id="v-down"><div class="loading">Loading orbits…</div></div>
         <div class="view hide" id="v-found"></div>
@@ -229,6 +280,8 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
       <div class="pop" id="pop" hidden></div>
       <div class="clock num" id="clock"></div>
       <div id="credits"></div>
+      <div class="tip" id="tip" hidden></div>
+      <div class="loader" id="loader"><span>Loading 10,000 orbits</span></div>
     </div>
   </div>
 </section>
@@ -248,7 +301,16 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
   </div>
 </section>
 
-<section class="how" id="how">
+<section class="acc" id="accuracy">
+  <div class="wide">
+    <p class="eyebrow">Track record</p>
+    <h2 class="section-title">How close were the predictions?</h2>
+    <p class="lede">Every forecast is saved. When an object comes down, we check how far off we were, next to The Aerospace Corporation's forecast.</p>
+    <div id="acc-body"></div>
+  </div>
+</section>
+
+<section class="light how" id="how">
   <div class="wide">
     <p class="eyebrow">How it works</p>
     <h2 class="section-title">Three public datasets, one map.</h2>
@@ -392,26 +454,26 @@ const pathSrc = new C.CustomDataSource("path"); viewer.dataSources.add(pathSrc);
 const ecef = (rec, when, gmst) => { const pv = satellite.propagate(rec, when); if (!pv || !pv.position) return null; const f = satellite.eciToEcf(pv.position, gmst);
   return new C.Cartesian3(f.x * 1000, f.y * 1000, f.z * 1000); };
 const SAT = C.Color.fromCssColorString("#9cc4ff").withAlpha(.85), FIRE = C.Color.fromCssColorString("#ff8a3d"), HOT = C.Color.fromCssColorString("#ffe2c2");
-function tick() {
+let tick = function () {
   const now = new Date(), g = satellite.gstime(now); $("clock").textContent = now.toISOString().slice(0, 19).replace("T", " ") + " UTC";
   if (show.sky) SKY.forEach((s, k) => { const p = ecef(s, now, g); const pt = skyPts.get(k); if (p) { pt.position = p; pt.show = true; } else pt.show = false; });
   LIVE.forEach((o, k) => { o._pos = subpoint(o._rec, now); const p = ecef(o._rec, now, g); const pt = fallPts.get(k); if (p) { pt.position = p; pt.show = show.fall; }
     pt.pixelSize = o === sel ? 16 : 10; pt.outlineWidth = o === sel ? 3 : 2; });
   document.querySelectorAll("[data-cd]").forEach(el => el.textContent = countdown(LIVE[+el.dataset.cd]));
   scene.requestRender();
-}
+};
 function tab(k) { for (const t of ["down", "found"]) { $("t-" + t).setAttribute("aria-selected", t === k); $("v-" + t).classList.toggle("hide", t !== k); } }
 ["down", "found"].forEach(k => $("t-" + k).addEventListener("click", () => tab(k)));
 function clearPath() { pathSrc.entities.removeAll(); }
-function listView() {
+let listView = function () {
   sel = null; clearPath();
   $("v-down").innerHTML = `<p class="note">Due back soonest first · updated ${esc(window.UPDATED)}</p><ul class="list">${LIVE.map((o, i) => `<li class="item" tabindex="0" data-i="${i}">
     <span class="nm"><span class="chip ${o.type === "R/B" ? "rb" : ""}">${esc(TYPES[o.type] || "Object")}</span>${esc(o.name)}</span><span class="w" data-cd="${i}">${countdown(o)}</span>
     <span class="sub">${peopleLine(o)}</span></li>`).join("")}</ul>`;
   $("v-down").querySelectorAll(".item").forEach(li => { const go = () => detail(LIVE[+li.dataset.i]); li.onclick = go; li.onkeydown = e => { if (e.key === "Enter") go(); }; });
-}
+};
 const ring = (lat) => { const a = []; for (let lo = -180; lo <= 180; lo += 2) a.push(lo, lat); return C.Cartesian3.fromDegreesArray(a); };
-function detail(o, fly = true) {
+let detail = function (o, fly = true) {
   sel = o; tab("down"); clearPath();
   const e = o.exposure, lim = e.mode === "band" ? e.lat_limit : Math.round(Math.min(o.inc, 180 - o.inc) * 10) / 10;
   for (const s of [lim, -lim]) pathSrc.entities.add({ polyline: { positions: ring(s), width: 1.5, arcType: C.ArcType.RHUMB,
@@ -439,7 +501,7 @@ function detail(o, fly = true) {
     <p class="h">Sources</p><p class="src"><a href="${o.links.celestrak}" target="_blank" rel="noopener">CelesTrak</a><a href="${o.links.aerospace}" target="_blank" rel="noopener">Aerospace Corp.</a><a href="${o.links.n2yo}" target="_blank" rel="noopener">N2YO</a></p></div>`;
   $("v-down").scrollTop = 0; $("back").onclick = listView; const sf = $("sf"); if (sf) sf.onclick = (ev) => { ev.preventDefault(); tab("found"); foundView(e.countries.map(c => c.n3)); };
   if (fly && o._pos) viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(o._pos[1], Math.max(-60, Math.min(60, o._pos[0])), 1.15e7), duration: 1.6 });
-}
+};
 function foundView(only) {
   const pts = HIST.points.filter(p => !only || only.includes(p.n3)).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   $("v-found").innerHTML = `<p class="note">${only ? `In the countries under the selected path · <a href="#" id="all">show all</a>` : "Re-entry debris recovered on the ground since 1962"} · ${pts.length}</p><ul class="list">${pts.map(p => `<li class="item" tabindex="0" data-lat="${p.lat}" data-lon="${p.lon}">
@@ -462,27 +524,182 @@ new C.ScreenSpaceEventHandler(scene.canvas).setInputAction((ev) => {
 function tg(id, key, fn) { $(id).onclick = () => { show[key] = !show[key]; $(id).setAttribute("aria-pressed", show[key]); fn && fn(); scene.requestRender(); }; }
 tg("tg-sky", "sky", () => { skyPts.show = show.sky; }); tg("tg-fall", "fall", () => { fallPts.show = show.fall; pathSrc.show = show.fall; }); tg("tg-found", "found", () => { foundPts.show = show.found; });
 function buildPoints() {
-  SKY.forEach(() => skyPts.add({ pixelSize: 2, color: SAT, show: false }));
+  SKY.forEach((s, k) => skyPts.add({ pixelSize: 2, color: SAT, show: false, id: { kind: "sky", k } }));
   LIVE.forEach((o, i) => fallPts.add({ pixelSize: 10, color: FIRE, outlineColor: HOT, outlineWidth: 2, id: { kind: "fall", i }, show: false }));
   for (const p of HIST.points) if (p.lat != null) foundPts.add({ position: C.Cartesian3.fromDegrees(p.lon, p.lat, 0), id: { kind: "found", p },
     pixelSize: p.src === "ESA" ? 7 : 10, color: p.src === "ESA" ? C.Color.WHITE : C.Color.TRANSPARENT, outlineColor: p.src === "ESA" ? C.Color.BLACK : FIRE, outlineWidth: p.src === "ESA" ? 1 : 2.5,
     disableDepthTestDistance: 0 });
 }
 
+// ================================================================ extras: freshness, search, hover, follow, time, me, accuracy, share
+let SKYN = [], follow = false, scrubT = null, ME = null, pickMe = false;
+const ghost = scene.primitives.add(new C.PointPrimitiveCollection());
+const ghostPt = ghost.add({ pixelSize: 14, color: C.Color.WHITE.withAlpha(.0), outlineColor: C.Color.WHITE, outlineWidth: 2, show: false });
+const mePts = scene.primitives.add(new C.PointPrimitiveCollection());
+const mePt = mePts.add({ pixelSize: 12, color: C.Color.fromCssColorString("#30d158"), outlineColor: C.Color.WHITE, outlineWidth: 2, show: false, disableDepthTestDistance: 0 });
+const hiPt = ghost.add({ pixelSize: 12, color: C.Color.fromCssColorString("#9cc4ff"), outlineColor: C.Color.WHITE, outlineWidth: 2, show: false });
+let hiK = null;
+const ago = () => { const h = (Date.now() - Date.parse(window.UPDATED_ISO)) / 3600e3; return h < 1 ? `${Math.max(1, Math.round(h * 60))} min ago` : h < 48 ? `${Math.round(h)} h ago` : `${Math.round(h / 24)} days ago`; };
+const freshness = () => { const h = (Date.now() - Date.parse(window.UPDATED_ISO)) / 3600e3;
+  return `<span class="fresh ${h > 6 ? "stale" : ""}"><i></i>${h > 6 ? `Data may be out of date · updated ${ago()}` : `Orbits updated ${ago()}`}</span>`; };
+function satInfo(rec, when = new Date()) { const pv = satellite.propagate(rec, when); if (!pv || !pv.position) return null;
+  const gd = satellite.eciToGeodetic(pv.position, satellite.gstime(when)), v = pv.velocity;
+  return { lat: satellite.degreesLat(gd.latitude), lon: satellite.degreesLong(gd.longitude), alt: gd.height, v: Math.hypot(v.x, v.y, v.z) }; }
+
+// ---- search
+const q = $("q"), res = $("res");
+q.addEventListener("input", () => {
+  const s = q.value.trim().toUpperCase(); if (s.length < 2) { res.classList.add("hide"); return; }
+  const hits = []; LIVE.forEach((o, i) => { if (o.name.toUpperCase().includes(s) || String(o.norad) === s) hits.push({ t: "live", i, name: o.name, sub: "coming down" }); });
+  for (let k = 0; k < SKYN.length && hits.length < 12; k++) if (SKYN[k][0].toUpperCase().includes(s) || SKYN[k][1] === s) hits.push({ t: "sky", k, name: SKYN[k][0], sub: "NORAD " + SKYN[k][1] });
+  res.innerHTML = hits.length ? hits.map((h, j) => `<button data-j="${j}"><span>${esc(h.name)}</span><small>${esc(h.sub)}</small></button>`).join("") : `<div class="note" style="padding:10px">Nothing found. Try a name like ISS or STARLINK-1478, or a NORAD number.</div>`;
+  res.classList.remove("hide");
+  res.querySelectorAll("button").forEach(b => b.onclick = () => { const h = hits[+b.dataset.j]; res.classList.add("hide"); q.value = h.name; h.t === "live" ? detail(LIVE[h.i]) : skyDetail(h.k); });
+});
+q.addEventListener("keydown", e => { if (e.key === "Enter") { const b = res.querySelector("button"); if (b) b.click(); } if (e.key === "Escape") res.classList.add("hide"); });
+document.addEventListener("click", e => { if (!e.target.closest(".search")) res.classList.add("hide"); });
+function skyDetail(k, fly = true) {
+  sel = null; clearPath(); tab("down"); hiK = k; const i = satInfo(SKY[k]); const [name, norad] = SKYN[k];
+  $("v-down").innerHTML = `<div class="detail"><button class="back" id="back">‹ All objects</button><h2>${esc(name)}</h2><p class="meta">NORAD ${esc(norad)}</p>
+    <dl class="kv"><dt>Height now</dt><dd class="num" id="sk-alt">${i ? Math.round(i.alt).toLocaleString("en") + " km" : "?"}</dd><dt>Speed</dt><dd class="num" id="sk-v">${i ? i.v.toFixed(2) + " km/s" : "?"}</dd>
+    <dt>Over</dt><dd class="num" id="sk-ll">${i ? `${i.lat.toFixed(1)}°, ${i.lon.toFixed(1)}°` : "?"}</dd></dl>
+    <p class="small">Not on the list of objects expected to come down soon.</p>
+    <div class="tools" style="margin-top:14px"><button class="tool" id="fol" aria-pressed="${follow}">Follow</button><button class="tool" id="shr">Copy link</button></div>
+    <p class="h">Sources</p><p class="src"><a href="https://celestrak.org/satcat/table-satcat.php?CATNR=${esc(norad)}" target="_blank" rel="noopener">CelesTrak</a><a href="https://www.n2yo.com/satellite/?s=${esc(norad)}" target="_blank" rel="noopener">N2YO</a></p></div>`;
+  $("back").onclick = () => { hiK = null; hiPt.show = false; listView(); }; wireTools(norad);
+  if (fly && i) viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(i.lon, i.lat, 9e6), duration: 1.4 });
+}
+function wireTools(norad) {
+  const f = $("fol"); if (f) f.onclick = () => { follow = !follow; f.setAttribute("aria-pressed", follow); };
+  const s = $("shr"); if (s) s.onclick = async () => { const url = location.origin + location.pathname + "?norad=" + norad + "#live";
+    try { await navigator.clipboard.writeText(url); s.textContent = "Link copied"; } catch (e) { prompt("Copy this link", url); } setTimeout(() => s.textContent = "Copy link", 1800); };
+}
+// ---- follow, ghost, highlight each second
+const _tick = tick;
+tick = function () {
+  _tick();
+  if (hiK != null) { const p = ecef(SKY[hiK], new Date(), satellite.gstime(new Date())); if (p) { hiPt.position = p; hiPt.show = true; }
+    const i = satInfo(SKY[hiK]); if (i && $("sk-alt")) { $("sk-alt").textContent = Math.round(i.alt).toLocaleString("en") + " km"; $("sk-v").textContent = i.v.toFixed(2) + " km/s"; $("sk-ll").textContent = `${i.lat.toFixed(1)}°, ${i.lon.toFixed(1)}°`; } }
+  else hiPt.show = false;
+  if (follow) { const pos = sel ? sel._pos : hiK != null ? (() => { const i = satInfo(SKY[hiK]); return i && [i.lat, i.lon]; })() : null;
+    if (pos) { const h = viewer.camera.positionCartographic.height; viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(pos[1], pos[0], Math.min(Math.max(h, 2e6), 2e7)), duration: .95, easingFunction: C.EasingFunction.LINEAR_NONE }); } }
+  const f = $("freshslot"); if (f) f.innerHTML = freshness();
+};
+const stopFollow = () => { if (follow) { follow = false; const f = $("fol"); if (f) f.setAttribute("aria-pressed", false); } };
+const H2 = new C.ScreenSpaceEventHandler(scene.canvas);
+H2.setInputAction(stopFollow, C.ScreenSpaceEventType.LEFT_DOWN); H2.setInputAction(stopFollow, C.ScreenSpaceEventType.WHEEL); H2.setInputAction(stopFollow, C.ScreenSpaceEventType.PINCH_START);
+// ---- hover tooltip
+const tip = $("tip"); let lastHover = 0;
+H2.setInputAction((m) => {
+  if (Date.now() - lastHover < 60) return; lastHover = Date.now();
+  const hit = scene.pick(m.endPosition); if (!hit || !hit.id) { tip.hidden = true; scene.canvas.style.cursor = ""; return; }
+  let html = null;
+  if (hit.id.kind === "sky") { const i = satInfo(SKY[hit.id.k]); html = `${esc(SKYN[hit.id.k][0])}<br><small>${i ? Math.round(i.alt).toLocaleString("en") + " km up · " + i.v.toFixed(1) + " km/s" : ""}</small>`; }
+  if (hit.id.kind === "fall") { const o = LIVE[hit.id.i]; html = `${esc(o.name)}<br><small>${countdown(o)} · click for its path</small>`; }
+  if (hit.id.kind === "found") html = `${esc(hit.id.p.name)}<br><small>${esc(hit.id.p.date || "")} · ${esc(hit.id.p.country || "")}</small>`;
+  if (!html) { tip.hidden = true; return; }
+  tip.innerHTML = html; tip.hidden = false; scene.canvas.style.cursor = "pointer";
+  tip.style.left = Math.min(m.endPosition.x + 14, scene.canvas.clientWidth - 240) + $("map").offsetLeft + "px"; tip.style.top = (m.endPosition.y + 14) + "px";
+}, C.ScreenSpaceEventType.MOUSE_MOVE);
+H2.setInputAction((ev) => { const hit = scene.pick(ev.position);
+  if (hit && hit.id && hit.id.kind === "sky") skyDetail(hit.id.k, false);
+  if (pickMe) { const c = viewer.camera.pickEllipsoid(ev.position); if (c) { const g = C.Cartographic.fromCartesian(c); pickMe = false; checkMe(C.Math.toDegrees(g.latitude), C.Math.toDegrees(g.longitude), "the place you picked"); } }
+}, C.ScreenSpaceEventType.LEFT_CLICK);
+// ---- time slider inside detail
+function scrubber(o) {
+  const lo = Math.max(Date.now(), Date.parse(o.t0) - o.half_h * 3600e3), hi = Date.parse(o.t0) + o.half_h * 3600e3; if (hi <= lo) return "";
+  return `<div class="scrub"><label for="tsl"><span>Where it could be at</span><output id="tso">now</output></label>
+    <input type="range" id="tsl" min="${lo}" max="${hi}" step="60000" value="${lo}"><label style="margin:8px 0 0"><span>Lighting follows the time you pick.</span><button class="tool" id="tnow" style="padding:4px 10px">Now</button></label></div>`;
+}
+function wireScrub(o) {
+  const s = $("tsl"); if (!s) return;
+  const set = (t) => { scrubT = t; const d = new Date(t); $("tso").textContent = d.toISOString().slice(5, 16).replace("T", " ") + " UTC";
+    viewer.clock.shouldAnimate = false; viewer.clock.currentTime = C.JulianDate.fromDate(d);
+    const p = ecef(o._rec, d, satellite.gstime(d)); if (p) { ghostPt.position = p; ghostPt.show = true; } else ghostPt.show = false; scene.requestRender(); };
+  s.oninput = () => set(+s.value);
+  $("tnow").onclick = () => { scrubT = null; ghostPt.show = false; viewer.clock.currentTime = C.JulianDate.now(); viewer.clock.shouldAnimate = true; $("tso").textContent = "now"; s.value = s.min; scene.requestRender(); };
+}
+const _detail = detail;
+detail = function (o, fly = true) {
+  hiK = null; ghostPt.show = false; viewer.clock.currentTime = C.JulianDate.now(); viewer.clock.shouldAnimate = true;
+  _detail(o, fly);
+  const c = document.querySelector("#v-down .count");
+  c.insertAdjacentHTML("afterend", `<div class="tools"><button class="tool" id="fol" aria-pressed="${follow}">Follow</button><button class="tool" id="shr">Copy link</button></div>${scrubber(o)}`);
+  wireTools(o.norad); wireScrub(o);
+};
+const _listView = listView;
+listView = function () { hiK = null; ghostPt.show = false; _listView(); const n = document.querySelector("#v-down .note"); if (n) n.innerHTML = `<span id="freshslot">${freshness()}</span>`; showMe(); };
+// ---- am I under one?
+function distKm(a, b, c, d) { const r = Math.PI / 180, x = Math.sin((c - a) * r / 2) ** 2 + Math.cos(a * r) * Math.cos(c * r) * Math.sin((d - b) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); }
+function checkMe(lat, lon, label) {
+  mePt.position = C.Cartesian3.fromDegrees(lon, lat, 0); mePt.show = true;
+  const near = [], band = [];
+  for (const o of LIVE) {
+    const lo = Math.max(Date.now(), Date.parse(o.t0) - o.half_h * 3600e3), hi = Date.parse(o.t0) + o.half_h * 3600e3; if (hi < Date.now()) continue;
+    const lim = Math.min(o.inc, 180 - o.inc); if (Math.abs(lat) > lim + .5) continue;
+    if (o.exposure.mode === "band") { band.push(o); continue; }
+    let best = 1e9, when = null;
+    for (let t = lo; t <= hi; t += 15000) { const i = satInfo(o._rec, new Date(t)); if (!i) break; const d = distKm(lat, lon, i.lat, i.lon); if (d < best) { best = d; when = t; } }
+    if (best <= 50) near.push({ o, best, when });
+  }
+  ME = { lat, lon, label, near, band };
+  showMe(); viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(lon, lat, 8e6), duration: 1.4 });
+}
+function showMe() {
+  if (!ME || sel || hiK != null) return; const v = $("v-down"); v.querySelector(".under")?.remove();
+  const { near, band, label } = ME;
+  const head = near.length ? `${near.length === 1 ? "One object" : near.length + " objects"} can pass within 50 km of ${esc(label)}` : `Nothing due to pass within 50 km of ${esc(label)}`;
+  v.insertAdjacentHTML("afterbegin", `<div class="under"><button class="x" id="mex" aria-label="Close">×</button><b>${head}</b>
+    ${near.length ? `<ul>${near.map(n => `<li><a href="#" data-n="${LIVE.indexOf(n.o)}">${esc(n.o.name)}</a>, closest ${Math.round(n.best)} km around ${new Date(n.when).toISOString().slice(5, 16).replace("T", " ")} UTC</li>`).join("")}</ul>` : ""}
+    <p class="small" style="margin-top:8px">${band.length ? `${band.length} more could still come down anywhere in a band that includes you, because their windows are days wide. The chance for any single spot is tiny.` : "Even under a path, the chance that debris lands near any one place is very small."}</p></div>`);
+  $("mex").onclick = () => { ME = null; mePt.show = false; v.querySelector(".under")?.remove(); };
+  v.querySelectorAll(".under a[data-n]").forEach(a => a.onclick = (e) => { e.preventDefault(); detail(LIVE[+a.dataset.n]); });
+}
+$("me").onclick = () => {
+  if (!navigator.geolocation) { pickMe = true; $("me").textContent = "Click your place"; return; }
+  $("me").textContent = "Locating…";
+  navigator.geolocation.getCurrentPosition(p => { $("me").textContent = "Am I under one?"; listView(); checkMe(p.coords.latitude, p.coords.longitude, "you"); },
+    () => { pickMe = true; $("me").textContent = "Click your place on the globe"; }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
+};
+// ---- accuracy section
+function accuracy(track) {
+  const box = $("acc-body"); const rows = [];
+  for (const [nid, o] of Object.entries(track.objects || {})) { if (!o.final) continue;
+    const T = Date.parse(o.final.t); const pick = (arr, lead) => { let b = null; for (const p of arr || []) { const made = Date.parse(p[0]); if (made <= T - lead * 3600e3 && (!b || made > Date.parse(b[0]))) b = p; } return b; };
+    const r = { nid, name: o.name, T, fin: o.final };
+    for (const [k, lead] of [["ours24", 24], ["aero24", 24], ["ours72", 72]]) { const p = pick(k.startsWith("ours") ? o.ours : o.aero, lead); if (p) r[k] = { err: Math.abs(Date.parse(p[1]) - T) / 3600e3, inside: Math.abs(Date.parse(p[1]) - T) <= p[2] * 3600e3 + o.final.half_h * 3600e3 }; }
+    rows.push(r); }
+  rows.sort((a, b) => b.T - a.T);
+  const med = (a) => { a = a.slice().sort((x, y) => x - y); const n = a.length; return n ? (n % 2 ? a[(n - 1) / 2] : (a[n / 2 - 1] + a[n / 2]) / 2) : null; };
+  const objs = (n) => n === 1 ? "1 object" : n + " objects";
+  const o24 = rows.filter(r => r.ours24), a24 = rows.filter(r => r.aero24), o72 = rows.filter(r => r.ours72);
+  if (!rows.length) { box.innerHTML = `<div class="empty">Tracking started ${esc(new Date(track.started || Date.now()).toUTCString().slice(5, 16))}. Every prediction is saved, and once objects come down they show up here with how far off we were. The first results appear after the first re-entries, usually within a day or two.</div>`; return; }
+  const h = (x) => x == null ? "–" : x < 1 ? Math.round(x * 60) + " min" : x.toFixed(1) + " h";
+  box.innerHTML = `<div class="stats">
+    <div class="st"><div class="n grad">${h(med(o24.map(r => r.ours24.err)))}</div><p>Typical error of our own estimate one day before re-entry (${objs(o24.length)}).</p></div>
+    <div class="st"><div class="n">${h(med(a24.map(r => r.aero24.err)))}</div><p>The Aerospace Corporation's typical error one day before (${objs(a24.length)}).</p></div>
+    <div class="st"><div class="n">${o24.length ? Math.round(100 * o24.filter(r => r.ours24.inside).length / o24.length) + "%" : "–"}</div><p>Of our one-day-out windows contained the actual re-entry time.</p></div></div>
+    <div class="tw"><table><thead><tr><th>Object</th><th>Came down (UTC)</th><th>Ours, 3 days before</th><th>Ours, 1 day before</th><th>Aerospace, 1 day before</th></tr></thead><tbody>
+    ${rows.slice(0, 12).map(r => `<tr><td>${esc(r.name)}</td><td class="num">${new Date(r.T).toISOString().slice(0, 16).replace("T", " ")}${r.fin.half_h >= 12 ? " (day only)" : ""}</td>
+      ${["ours72", "ours24", "aero24"].map(k => `<td class="num ${r[k] ? (r[k].inside ? "ok" : "miss") : ""}">${r[k] ? "off by " + h(r[k].err) : "–"}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <p class="small" style="color:#86868b;margin-top:14px">Actual times are The Aerospace Corporation's final post-event estimate where available, otherwise CelesTrak's decay date (day only). Green means the window contained the actual time.</p>`;
+}
+
 // ================================================================ load
 (async () => {
   try {
     const J = (u) => fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r; });
-    const [tle, live, hist, world, dots] = await Promise.all([J("data/sky.tle").then(r => r.text()), J("data/live.json").then(r => r.json()), J("data/history.json").then(r => r.json()),
-      J("data/world.json").then(r => r.json()), J("data/globe.json").then(r => r.json())]);
-    const T = tle.split(/\r?\n/).filter(Boolean); for (let i = 0; i + 2 < T.length; i += 3) { try { SKY.push(satellite.twoline2satrec(T[i + 1], T[i + 2])); } catch (e) {} }
+    const [tle, live, hist, world, dots, track] = await Promise.all([J("data/sky.tle").then(r => r.text()), J("data/live.json").then(r => r.json()), J("data/history.json").then(r => r.json()),
+      J("data/world.json").then(r => r.json()), J("data/globe.json").then(r => r.json()), fetch("data/track.json").then(r => r.ok ? r.json() : { objects: {} }).catch(() => ({ objects: {} }))]);
+    const T = tle.split(/\r?\n/).filter(Boolean); for (let i = 0; i + 2 < T.length; i += 3) { try { SKY.push(satellite.twoline2satrec(T[i + 1], T[i + 2])); SKYN.push([T[i].trim(), T[i + 1].slice(2, 7).trim()]); } catch (e) {} }
     LIVE = live.objects.filter(o => Date.now() < Date.parse(o.t0) + o.half_h * 3600e3 + 6 * 3600e3); LIVE.forEach(o => o._rec = satellite.twoline2satrec(o.tle[0], o.tle[1]));
-    window.UPDATED = live.updated.replace("T", " ").slice(0, 16) + " UTC"; HIST = hist; WORLD = topojson.feature(world, world.objects.countries);
+    window.UPDATED = live.updated.replace("T", " ").slice(0, 16) + " UTC"; window.UPDATED_ISO = live.updated; HIST = hist; WORLD = topojson.feature(world, world.objects.countries);
     $("n-sky").textContent = SKY.length.toLocaleString("en"); $("n-fall").textContent = LIVE.length; $("n-found").textContent = HIST.points.length;
-    buildPoints(); tick(); listView(); foundView(); landing(); setInterval(tick, 1000);
+    buildPoints(); tick(); listView(); foundView(); landing(); accuracy(track); setInterval(tick, 1000);
+    setTimeout(() => $("loader").classList.add("done"), 400);
     try { globe(dots); } catch (e) { console.warn("globe", e); }
-    const want = new URLSearchParams(location.search).get("norad"); const w = want && LIVE.find(x => String(x.norad) === want); if (w) detail(w);
-  } catch (e) { $("v-down").innerHTML = `<div class="loading">Couldn't load the orbit data (${esc(e.message)}). Reload to try again.</div>`; console.error(e); }
+    const want = new URLSearchParams(location.search).get("norad"); const w = want && LIVE.find(x => String(x.norad) === want); if (w) detail(w); else if (want) { const k = SKYN.findIndex(x => x[1] === want); if (k >= 0) skyDetail(k); }
+  } catch (e) { $("loader").classList.add("done"); $("v-down").innerHTML = `<div class="loading">Couldn't load the orbit data (${esc(e.message)}). Reload to try again.</div>`; console.error(e); }
 })();
 </script>
 </body>

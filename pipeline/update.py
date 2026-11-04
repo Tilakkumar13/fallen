@@ -136,6 +136,45 @@ def exposure_band(inc):
             "land_share": round(float(land), 2), "countries": top[:40], "n_countries": len(top)}
 
 
+ISO = lambda t: t.isoformat().replace("+00:00", "Z")
+
+
+def record(track, nid, name, typ, now, aero, ours):
+    o = track.setdefault(str(nid), {"name": name, "type": typ, "aero": [], "ours": [], "final": None})
+    for key, val in (("aero", aero), ("ours", ours)):
+        if not val or val[0] is None: continue
+        row = [ISO(now), ISO(val[0]), round(val[1], 1)]
+        if not o[key] or o[key][-1][1] != row[1]: o[key].append(row)
+        o[key] = o[key][-60:]
+
+
+def aerospace_final(nid):
+    html = get(f"https://aerospace.org/reentries/{nid}")
+    if "Reentered" not in html: return None
+    m = re.search(r"(\d{1,2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}) UTC\s*(?:±|&plusmn;)\s*(\d+(?:\.\d+)?)\s*(minute|hour|day)", html)
+    if not m: return None
+    t = datetime.strptime(m.group(1), "%d %b %Y %H:%M").replace(tzinfo=timezone.utc)
+    return {"t": ISO(t), "half_h": float(m.group(2)) * {"m": 1 / 60, "h": 1, "d": 24}[m.group(3)[0]], "src": "Aerospace Corporation final prediction"}
+
+
+def close_out(track, cat, offline):
+    """Objects that have come down: store the best public re-entry time."""
+    for nid, o in track.items():
+        if o.get("final"): continue
+        last = (o["aero"] or o["ours"] or [[None, None]])[-1][1]
+        if not last or datetime.fromisoformat(last.replace("Z", "+00:00")) > datetime.now(timezone.utc) - timedelta(hours=2): continue
+        c = cat.get(int(nid), {})
+        fin = None
+        if not offline:
+            try: fin = aerospace_final(nid)
+            except Exception: fin = None
+        if not fin and c.get("DECAY_DATE"):
+            fin = {"t": c["DECAY_DATE"] + "T12:00:00Z", "half_h": 12.0, "src": "CelesTrak decay date (day only)"}
+        if fin: o["final"] = fin
+    # keep the file small: drop objects with no data older than 120 days
+    return track
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--offline", action="store_true"); ap.add_argument("--max", type=int, default=60)
     a = ap.parse_args()
@@ -167,16 +206,21 @@ def main():
         if nid in preds or nid in decaying or per < 230:
             cands.append((per, nid, name, l1, l2, sat))
     cands.sort()
+    tpath = os.path.join(OUT, "track.json")
+    track = json.load(open(tpath)).get("objects", {}) if os.path.exists(tpath) else {}
     live = []
     for per, nid, name, l1, l2, sat in cands[: a.max * 3]:
         c = cat.get(nid, {})
         if c.get("DECAY_DATE"): continue
+        ours = decay_estimate(sat, now)
+        ours_half = max(1.0, 0.2 * (ours - now).total_seconds() / 3600) if ours else None
         if nid in preds:
             t0, half = preds[nid]; src = {"label": "The Aerospace Corporation", "url": f"https://aerospace.org/reentries/{nid}"}
         else:
-            t0 = decay_estimate(sat, now)
+            t0, half = ours, ours_half
             if t0 is None or t0 < now: continue
-            half = max(1.0, 0.2 * (t0 - now).total_seconds() / 3600); src = {"label": "Our estimate: SGP4 with the TLE drag term, ±20% of time left", "url": None}
+            src = {"label": "Our estimate: SGP4 with the TLE drag term, ±20% of time left", "url": None}
+        record(track, nid, name, c.get("OBJECT_TYPE"), now, (t0, half) if nid in preds else None, (ours, ours_half) if ours else None)
         if t0 + timedelta(hours=half) < now: continue
         inc = sat.inclo * 180 / math.pi
         exp = exposure_path(sat, t0, half) if half <= 12 else exposure_band(inc)
@@ -189,6 +233,9 @@ def main():
         print(f"{name:28s} {nid:6d} per {per:4.0f} km  {t0:%Y-%m-%d %H:%M} ±{half:5.1f} h  {exp['mode']:4s} people {exp['people']:,}")
         if len(live) >= a.max: break
     live.sort(key=lambda o: o["t0"])
+    close_out(track, cat, a.offline)
+    started = (json.load(open(tpath)).get("started") if os.path.exists(tpath) else None) or ISO(now)
+    json.dump({"started": started, "updated": ISO(now), "objects": track}, open(tpath, "w"), separators=(",", ":"))
     os.makedirs(OUT, exist_ok=True)
     json.dump({"updated": now.isoformat().replace("+00:00", "Z"), "predictions_from_aerospace": len(preds), "objects": live},
               open(os.path.join(OUT, "live.json"), "w"), separators=(",", ":"))
