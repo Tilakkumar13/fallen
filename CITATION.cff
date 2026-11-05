@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, data or finding, please cite it as below."
+title: "Fallen: a live map of space debris re-entering Earth, and who records what reaches the ground"
+abstract: >-
+  A live map of satellites and rocket bodies re-entering Earth, showing each object's possible path over its
+  prediction window, the population beneath it and its launching state under the 1972 UN Liability Convention.
+  It includes an analysis of ESA's recovered-debris list showing that high-income countries hold 43% of recorded
+  finds but only 12% of population-weighted exposure.
+type: software
+authors:
+  - given-names: Tilak
+    family-names: Kumar
+    affiliation: "Institute for Geoinformatics, University of Münster"
+repository-code: "https://github.com/Tilakkumar13/fallen"
+url: "https://tilakkumar13.github.io/fallen/"
+license: MIT
+keywords:
+  - space debris
+  - re-entry
+  - space sustainability
+  - Liability Convention
+  - GIS
+  - population exposure
+date-released: "2026-11-05"
