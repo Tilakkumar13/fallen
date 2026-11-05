@@ -207,6 +207,46 @@ a { color: var(--link-dark); text-decoration: none; } a:hover { text-decoration:
 .acc .empty { margin-top: 40px; border-radius: 28px; background: var(--card-dark); padding: 32px; color: var(--on-dark-2); font-size: 19px; }
 @media (max-width: 760px) { .acc .stats { grid-template-columns: minmax(0, 1fr); } }
 
+/* missing finds map */
+.miss-sec { padding-block: 0 120px; }
+.mapcard { margin-top: 50px; border-radius: 28px; background: var(--white); padding: 28px 28px 22px; position: relative; }
+.mapcard svg { display: block; width: 100%; height: auto; }
+.mapcard path.c { stroke: #fff; stroke-width: .6; cursor: default; transition: opacity .15s; }
+.mapcard path.c:hover, .mapcard path.c.on { stroke: var(--ink); stroke-width: 1.2; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.mtip { position: absolute; pointer-events: none; background: rgba(29,29,31,.94); color: #f5f5f7; border-radius: 12px; padding: 10px 13px; font-size: 14px; line-height: 1.35; max-width: 240px; z-index: 3; }
+.mtip b { display: block; font-size: 15px; } .mtip span { color: #a1a1a6; }
+.gaps { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-top: 20px; }
+.gaps .tile { padding: 32px; }
+.gaps h3 { margin: 0 0 18px; font-size: 21px; letter-spacing: -.01em; }
+.gl { display: grid; grid-template-columns: minmax(0, 9em) minmax(0, 1fr) auto; gap: 10px 14px; align-items: center; font-size: 15px; }
+.gl .tr { position: relative; height: 10px; border-radius: 5px; background: #ececef; }
+.gl .tr i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; }
+.gl .tr i.e { background: transparent; box-shadow: inset 0 0 0 1.5px #86868b; }
+.gl .v { color: var(--ink-2); font-size: 14px; white-space: nowrap; }
+.mfoot { color: #86868b; font-size: 14px; margin: 18px 0 0; }
+/* liability */
+.liab-sec { padding-block: 120px; }
+.liab-sec .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 50px; }
+.liab-sec .st { border-radius: 28px; background: var(--card-dark); padding: 32px; min-width: 0; }
+.liab-sec .st .n { font-size: clamp(44px, 5.4vw, 72px); font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.liab-sec .st p { color: var(--on-dark-2); margin: 12px 0 0; font-size: 17px; }
+.who { margin-top: 20px; border-radius: 28px; background: var(--card-dark); padding: 32px; }
+.who h3 { margin: 0 0 20px; font-size: 21px; }
+.hb { display: grid; grid-template-columns: minmax(0, 10em) minmax(0, 1fr) 3em; gap: 12px 14px; align-items: center; font-size: 15px; }
+.hb .tr { height: 12px; } .hb .tr i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--fire); min-width: 2px; }
+.hb .tr i.u { background: #48484a; } .hb .v { text-align: right; color: var(--on-dark-2); }
+.claim { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; margin-top: 56px; }
+.claim .k { font-size: 14px; font-weight: 600; color: var(--fire); margin-bottom: 10px; }
+.claim h3 { font-size: 21px; margin: 0 0 8px; } .claim p { color: var(--on-dark-2); margin: 0; font-size: 16px; }
+.lfoot { color: #86868b; font-size: 14px; margin: 40px 0 0; max-width: 56em; }
+.liab { display: grid; gap: 8px; margin: 4px 0 8px; }
+.liab div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.06); font-size: 14px; }
+.liab span { color: var(--on-dark-2); text-align: right; }
+@media (max-width: 760px) { .gaps, .liab-sec .stats { grid-template-columns: minmax(0, 1fr); } .claim { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .mapcard { padding: 18px 14px 14px; } }
+@media (max-width: 480px) { .claim { grid-template-columns: minmax(0, 1fr); } .gl { grid-template-columns: minmax(0, 7em) minmax(0, 1fr) auto; } .hb { grid-template-columns: minmax(0, 7.5em) minmax(0, 1fr) 2.5em; } }
+
 .maker { display: flex; align-items: center; gap: 28px; max-width: 760px; margin: 90px auto 0; padding: 30px 36px; background: var(--white); border-radius: 28px; }
 .maker img { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; flex: none; }
 .maker p { margin: 0; }
@@ -236,7 +276,7 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
 <body>
 <nav class="gnav" aria-label="Fallen"><div class="in">
   <a class="brand" href="#top"><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="#ff8a3d" stroke-width="1.6"/><path d="M3 15 L14 4" stroke="#ffd8a8" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="4" r="2" fill="#ff8a3d"/></svg>Fallen</a>
-  <div class="links"><a href="#next">Coming down</a><a href="#ground">On the ground</a><a href="#accuracy">Track record</a><a href="#how">How it works</a><a class="keep pill" style="padding:5px 12px;font-size:12px" href="#live">Live map</a></div>
+  <div class="links"><a href="#next">Coming down</a><a href="#ground">On the ground</a><a href="#liability">Who pays</a><a href="#accuracy">Track record</a><a href="#how">How it works</a><a class="keep pill" style="padding:5px 12px;font-size:12px" href="#live">Live map</a></div>
 </div></nav>
 
 <header class="hero" id="top">
@@ -309,6 +349,45 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
   </div>
 </section>
 
+<section class="light miss-sec" id="missing">
+  <div class="wide">
+    <p class="eyebrow">Missing finds</p>
+    <h2 class="section-title">Where debris should have been found.</h2>
+    <p class="lede">Every country, shaded by finds on record against the number its exposure predicts. Dark orange: debris almost certainly came down there and was never recorded.</p>
+    <div class="mapcard">
+      <div class="legend" id="m-legend"></div>
+      <svg id="m-svg" viewBox="0 0 960 470" role="img" aria-label="World map of recorded debris finds compared with expected finds, by country"></svg>
+      <div class="mtip" id="m-tip" hidden></div>
+    </div>
+    <div class="gaps">
+      <div class="tile"><h3>Biggest gaps</h3><div class="gl" id="m-gap"></div></div>
+      <div class="tile"><h3>Recorded more than expected</h3><div class="gl" id="m-over"></div></div>
+    </div>
+    <p class="mfoot">Filled bar: finds on record. Outline: finds expected if they followed where people live under each recovered object's orbit (75 recovered objects, ESA list since 1962, GHS-POP 2020). Countries with less than a third of a find expected are left grey. Australia's count includes the 1979 Skylab search.</p>
+  </div>
+</section>
+
+<section class="liab-sec" id="liability">
+  <div class="wide">
+    <p class="eyebrow">Who pays</p>
+    <h2 class="section-title">If it hits you, someone owes you.</h2>
+    <p class="lede">A 1972 UN treaty makes the country that launched an object absolutely liable for the damage it does on the ground. Every object on this site shows who that is.</p>
+    <div class="stats">
+      <div class="st"><div class="n">100</div><p>countries have ratified the Liability Convention, as of 1 January 2025.</p></div>
+      <div class="st"><div class="n grad">1</div><p>claim filed in 54 years. Canada, after Cosmos 954 scattered radioactive debris in 1978. The USSR paid C$3 million in 1981.</p></div>
+      <div class="st"><div class="n" id="l-unk">—</div><p id="l-unk-t">recorded finds can't be traced to any launching state, so there is no one to ask.</p></div>
+    </div>
+    <div class="who"><h3>Who launched what was found</h3><div class="hb" id="l-bars"></div></div>
+    <div class="claim">
+      <div><p class="k">Article VIII</p><h3>Your government claims.</h3><p>You can't file yourself. The state where the damage happened, or whose citizen was hurt, presents the claim.</p></div>
+      <div><p class="k">Article X</p><h3>Within one year.</h3><p>From the day of the damage, or from the day the launching state is identified.</p></div>
+      <div><p class="k">Article XI</p><h3>No court first.</h3><p>The claim doesn't have to go through local courts before it's presented.</p></div>
+      <div><p class="k">Article VII</p><h3>Not your own rocket.</h3><p>The treaty doesn't cover a country's own citizens. Debris from a US rocket in Texas falls under US law instead.</p></div>
+    </div>
+    <p class="lfoot">Launching states here come from CelesTrak's catalogue: the owner's country and the country of the launch site. The state that operated the rocket can be liable too, and when several qualify, any one can be asked for the full amount (Article V). This is a reading of public data, not legal advice. <a class="more" href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/liability-convention.html" target="_blank" rel="noopener">Read the treaty</a> <a class="more" href="https://www.unoosa.org/oosa/en/ourwork/spacelaw/nationalspacelaw/bi-multi-lateral-agreements/can_ussr_001.html" target="_blank" rel="noopener">The Cosmos 954 settlement</a></p>
+  </div>
+</section>
+
 <section class="acc" id="accuracy">
   <div class="wide">
     <p class="eyebrow">Track record</p>
@@ -347,6 +426,8 @@ footer .row { display: flex; justify-content: space-between; gap: 18px; flex-wra
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.123.0/Build/Cesium/Cesium.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.0/dist/d3-geo.min.js"></script>
 <script type="module">
 import * as THREE from "three";
 const $ = (id) => document.getElementById(id);
@@ -427,6 +508,70 @@ function landing() {
   if (p) { $("st-num").textContent = bigNum(p.exposure.people); $("st-text").innerHTML = `people live within 50 km of where <b>${esc(p.name)}</b> can come down, across <b>${p.exposure.n_countries} countries</b>.`; }
   document.querySelectorAll("[data-open]").forEach(el => { const go = (e) => { e.preventDefault(); detail(LIVE[+el.dataset.open]); $("live").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); };
     el.addEventListener("click", go); el.addEventListener("keydown", e => { if (e.key === "Enter") go(e); }); });
+}
+
+// ================================================================ who pays (1972 Liability Convention)
+const STATE = { US: "United States", PRC: "China", CIS: "Russia", JPN: "Japan", IND: "India", FR: "France", UK: "United Kingdom", GER: "Germany", IT: "Italy",
+  SKOR: "South Korea", CA: "Canada", SPN: "Spain", TURK: "Türkiye", AUS: "Australia", ROC: "Taiwan", ARGN: "Argentina", FIN: "Finland", NOR: "Norway",
+  UAE: "United Arab Emirates", ISRA: "Israel", BRAZ: "Brazil", GREC: "Greece", SING: "Singapore", INDO: "Indonesia", SAUD: "Saudi Arabia", IRAN: "Iran",
+  POL: "Poland", POR: "Portugal", SWED: "Sweden", EGYP: "Egypt", NETH: "Netherlands", PAKI: "Pakistan", LUXE: "Luxembourg", SES: "Luxembourg", O3B: "Luxembourg",
+  GLOB: "United States", ORB: "United States", IRID: "United States", IM: "United Kingdom", NKOR: "North Korea", MEX: "Mexico", CHLE: "Chile", THAI: "Thailand",
+  MALA: "Malaysia", SAFR: "South Africa", NIG: "Nigeria", KAZ: "Kazakhstan", UKR: "Ukraine", BEL: "Belgium", SWTZ: "Switzerland", DEN: "Denmark", AUT: "Austria",
+  CZE: "Czechia", HUN: "Hungary", PER: "Peru", COL: "Colombia", VTNM: "Vietnam", PHIL: "Philippines", BGD: "Bangladesh", NZ: "New Zealand", LTU: "Lithuania" };
+const ORG = { ESA: "European Space Agency", EUME: "EUMETSAT", EUTE: "Eutelsat", ITSO: "Intelsat", AB: "Arabsat", ISS: "ISS partners", CHBZ: "China and Brazil" };
+const SITE = { AFETR: ["United States", "Cape Canaveral"], AFWTR: ["United States", "Vandenberg"], WLPIS: ["United States", "Wallops"], ERAS: ["United States", "air launch"],
+  WRAS: ["United States", "air launch"], STARB: ["United States", "Starbase"], KODAK: ["United States", "Kodiak"], TAISC: ["China", "Taiyuan"], XICLF: ["China", "Xichang"],
+  JSC: ["China", "Jiuquan"], WSC: ["China", "Wenchang"], YSLA: ["China", "sea platform"], SCSLA: ["China", "sea platform"], JJSLA: ["China", "sea platform"],
+  PLMSC: ["Russia", "Plesetsk"], VOSTO: ["Russia", "Vostochny"], DLS: ["Russia", "Dombarovsky"], KYMSC: ["Russia", "Kapustin Yar"], SVOBO: ["Russia", "Svobodny"],
+  TYMSC: ["Kazakhstan", "Baikonur"], FRGUI: ["France", "Kourou"], SRILR: ["India", "Sriharikota"], TANSC: ["Japan", "Tanegashima"], KSCUT: ["Japan", "Uchinoura"],
+  RLLB: ["New Zealand", "Mahia"], NSC: ["South Korea", "Naro"], SEMLS: ["Iran", "Semnan"], SMTS: ["Iran", "Shahroud"], ANDSP: ["Norway", "Andøya"],
+  YAVNE: ["Israel", "Palmachim"], WOMRA: ["Australia", "Woomera"], YUN: ["North Korea", "Sohae"], KWAJ: ["Marshall Islands", "Kwajalein"] };
+function liable(owner, site, date) {
+  const out = [], who = STATE[owner] || ORG[owner];
+  if (who) out.push({ who: owner === "CIS" && date && date < "1991-12-26" ? "Russia (as the USSR)" : who, why: ORG[owner] ? "owner" : "owner's country" });
+  const s = SITE[site];
+  // Baikonur was Soviet territory until the end of 1991
+  if (s && s[0] !== who && !(site === "TYMSC" && date && date < "1991-12-26")) out.push({ who: s[0], why: `launch site, ${s[1]}` });
+  return out;
+}
+const liableShort = (o) => { const l = liable(o.owner, o.site, o.date || o.launch); return l.length ? l.map(x => x.who).join(" + ") : ""; };
+function liabilitySection() {
+  const pts = HIST.points, n = {}; let unk = 0;
+  for (const p of pts) { const k = p.owner ? (p.owner === "CIS" ? "Russia / USSR" : STATE[p.owner] || ORG[p.owner] || p.owner) : null; if (k) n[k] = (n[k] || 0) + 1; else unk++; }
+  const rows = Object.entries(n).sort((a, b) => b[1] - a[1]), max = Math.max(...rows.map(r => r[1]), unk);
+  $("l-unk").textContent = unk; $("l-unk-t").textContent = `of ${pts.length} recorded finds can't be traced to any launching state, so there is no one to ask.`;
+  $("l-bars").innerHTML = rows.map(([k, v]) => `<span>${esc(k)}</span><span class="tr"><i style="width:${(100 * v / max).toFixed(1)}%"></i></span><span class="v num">${v}</span>`).join("")
+    + `<span>Unidentified</span><span class="tr"><i class="u" style="width:${(100 * unk / max).toFixed(1)}%"></i></span><span class="v num">${unk}</span>`;
+}
+
+// ================================================================ missing finds map
+const MCLS = [
+  { k: "far-fewer", c: "#c4471a", t: "Far fewer than expected" }, { k: "fewer", c: "#f0a27e", t: "Fewer" }, { k: "about", c: "#b9b9bf", t: "About as expected" },
+  { k: "more", c: "#8fb1ee", t: "More" }, { k: "far-more", c: "#2a64d6", t: "Far more than expected" }, { k: "little", c: "#ececef", t: "Too little exposure to tell" }];
+function mclass(v) {
+  if (!v || (v.exp < 1 / 3 && v.obs === 0)) return MCLS[5];
+  const r = (v.obs + .5) / (v.exp + .5);
+  return r <= 1 / 3 ? MCLS[0] : r <= .75 ? MCLS[1] : r < 1.34 ? MCLS[2] : r < 3 ? MCLS[3] : MCLS[4];
+}
+const findsTxt = (x) => x < 1 ? x.toFixed(1) : String(Math.round(x));
+function missingMap(world) {
+  const C2 = HIST.countries, svg = $("m-svg"), tip = $("m-tip"), card = svg.parentElement;
+  const feats = topojson.feature(world, world.objects.countries).features.filter(f => f.id !== "010");
+  const proj = d3.geoEqualEarth().fitExtent([[4, 4], [956, 466]], { type: "FeatureCollection", features: feats }), path = d3.geoPath(proj);
+  svg.innerHTML = feats.map(f => { const v = C2[f.id], m = mclass(v); return `<path class="c" d="${path(f)}" fill="${m.c}" data-id="${esc(f.id)}"></path>`; }).join("");
+  $("m-legend").innerHTML = MCLS.map(m => `<span><i style="background:${m.c}"></i>${m.t}</span>`).join("");
+  const show = (el, x, y) => { const v = C2[el.dataset.id]; if (!v) return hide();
+    svg.querySelectorAll(".on").forEach(e => e.classList.remove("on")); el.classList.add("on");
+    tip.innerHTML = `<b>${esc(v.name)}</b>${v.obs} recorded · ~${findsTxt(v.exp)} expected<br><span>${esc(mclass(v).t)}</span>`; tip.hidden = false;
+    const r = card.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    tip.style.left = Math.min(r.width - w - 8, Math.max(8, x - r.left + 14)) + "px"; tip.style.top = Math.max(8, y - r.top - h - 12) + "px"; };
+  const hide = () => { tip.hidden = true; svg.querySelectorAll(".on").forEach(e => e.classList.remove("on")); };
+  for (const ev of ["pointermove", "pointerdown"]) svg.addEventListener(ev, e => e.target.classList.contains("c") ? show(e.target, e.clientX, e.clientY) : hide());
+  svg.addEventListener("pointerleave", hide);
+  const all = Object.values(C2), gl = (list) => { const mx = Math.max(...list.map(v => Math.max(v.obs, v.exp)));
+    return list.map(v => `<span>${esc(v.name.replace("United States of America", "United States"))}</span><span class="tr"><i class="e" style="width:${(100 * v.exp / mx).toFixed(1)}%"></i><i style="width:${(100 * v.obs / mx).toFixed(1)}%;background:${mclass(v).c}"></i></span><span class="v num">${v.obs} of ~${findsTxt(v.exp)}</span>`).join(""); };
+  $("m-gap").innerHTML = gl(all.filter(v => v.exp - v.obs > 0).sort((a, b) => (b.exp - b.obs) - (a.exp - a.obs)).slice(0, 7));
+  $("m-over").innerHTML = gl(all.filter(v => v.obs - v.exp > 0).sort((a, b) => (b.obs - b.exp) - (a.obs - a.exp)).slice(0, 7));
 }
 
 // ================================================================ live globe (CesiumJS)
@@ -513,6 +658,9 @@ let detail = function (o, fly = true) {
     ${e.mode === "path" ? `<p class="h">Under its possible path</p><div class="bignum">${big(e.people)}</div><p class="small">people within ${e.swath_km} km of every place it passes during the window, in ${e.n_countries} countries. ${Math.round(e.land_share * 100)}% of the path is over land.</p>`
       : `<p class="h">Where it can fall</p><div class="bignum">${lim}° N–S</div><p class="small">The window is still days wide, so any longitude in this band is possible. Shares show where the people under the band live.</p>`}
     <div class="ctry">${rows}</div>
+    <p class="h">Who pays if it hits you</p>${(() => { const L = liable(o.owner, o.site, o.launch);
+      return L.length ? `<div class="liab">${L.map(x => `<div><b>${esc(x.who)}</b><span>${esc(x.why)}</span></div>`).join("")}</div><p class="small" style="margin-top:0">Under the 1972 UN Liability Convention, the launching state is absolutely liable for damage on the ground${L.length > 1 ? ", and any one of these can be asked for the full amount" : ""}. Your government presents the claim. <a href="#liability">How it works</a></p>`
+        : `<p class="small" style="margin-top:0">The launching state isn't in the public catalogue for this object.</p>`; })()}
     <p class="h">Orbit</p><dl class="kv"><dt>Lowest point</dt><dd class="num">${o.perigee} km</dd><dt>Inclination</dt><dd class="num">${o.inc}°</dd></dl>
     <p class="h">Already fallen in these countries</p><p class="small" style="margin-top:0">${found ? `${found} recorded finds. <a href="#" id="sf">Show them</a>` : "None on record."}</p>
     <p class="h">Sources</p><p class="src"><a href="${o.links.celestrak}" target="_blank" rel="noopener">CelesTrak</a><a href="${o.links.aerospace}" target="_blank" rel="noopener">Aerospace Corp.</a><a href="${o.links.n2yo}" target="_blank" rel="noopener">N2YO</a></p></div>`;
@@ -523,7 +671,7 @@ function foundView(only) {
   const pts = HIST.points.filter(p => !only || only.includes(p.n3)).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   $("v-found").innerHTML = `<p class="note">${only ? `In the countries under the selected path · <a href="#" id="all">show all</a>` : "Re-entry debris recovered on the ground since 1962"} · ${pts.length}</p><ul class="list">${pts.map(p => `<li class="item" tabindex="0" data-lat="${p.lat}" data-lon="${p.lon}">
     <span class="nm">${p.src !== "ESA" ? '<span class="chip news">Local news</span>' : ""}${esc(p.name)}</span><span class="w" style="color:#8e8e93">${esc((p.date || "").slice(0, 4))}</span>
-    <span class="sub">${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""} · ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}</span></li>`).join("")}</ul>`;
+    <span class="sub">${esc(p.country || "")}${p.n > 1 ? ` · ${p.n} fragments` : ""}${liableShort(p) ? ` · launched by ${esc(liableShort(p))}` : ""} ·${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join(" ")}</span></li>`).join("")}</ul>`;
   const a = $("all"); if (a) a.onclick = (ev) => { ev.preventDefault(); foundView(); };
   $("v-found").querySelectorAll(".item").forEach(li => li.onclick = (ev) => { if (ev.target.tagName !== "A" && li.dataset.lat !== "null")
     viewer.camera.flyTo({ destination: C.Cartesian3.fromDegrees(+li.dataset.lon, +li.dataset.lat, 6e5), duration: 2 }); });
@@ -712,6 +860,8 @@ function accuracy(track) {
     LIVE = live.objects.filter(o => Date.now() < Date.parse(o.t0) + o.half_h * 3600e3 + 6 * 3600e3); LIVE.forEach(o => o._rec = satellite.twoline2satrec(o.tle[0], o.tle[1]));
     window.UPDATED = live.updated.replace("T", " ").slice(0, 16) + " UTC"; window.UPDATED_ISO = live.updated; HIST = hist; WORLD = topojson.feature(world, world.objects.countries);
     $("n-sky").textContent = SKY.length.toLocaleString("en"); $("n-fall").textContent = LIVE.length; $("n-found").textContent = HIST.points.length;
+    try { missingMap(world); } catch (e) { console.warn("missing map", e); }
+    try { liabilitySection(); } catch (e) { console.warn("liability", e); }
     buildPoints(); tick(); listView(); foundView(); landing(); accuracy(track); setInterval(tick, 1000);
     setTimeout(() => $("loader").classList.add("done"), 400);
     try { globe(dots); } catch (e) { console.warn("globe", e); }

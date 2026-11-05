@@ -43,12 +43,28 @@ def parse_tle(text):
 
 
 def aerospace_predictions(html):
-    """Upcoming predictions from aerospace.org/reentries: NORAD id -> (time UTC, half-window hours)."""
+    """Upcoming predictions from aerospace.org/reentries: NORAD id -> (time UTC, half-window hours).
+    Entries read like "STARLINK-2019 (ID 47641) ... Aug 10, 2026 07:04 UTC ± 14 hours"."""
     out = {}
-    for m in re.finditer(r"\(ID\s*(\d+)\)(.{0,1500}?)([A-Z][a-z]{2} \d{1,2}, \d{4} \d{2}:\d{2}:\d{2})\s*(?:±|&plusmn;|\+/-)\s*(\d+(?:\.\d+)?)\s*(hour|hours|minute|minutes|day|days)", html, re.S):
-        t = datetime.strptime(m.group(3), "%b %d, %Y %H:%M:%S").replace(tzinfo=timezone.utc)
+    for m in re.finditer(r"\(ID\s*(\d+)\)(.{0,1500}?)([A-Z][a-z]{2} \d{1,2}, \d{4} \d{2}:\d{2}(?::\d{2})?)\s*(?:UTC)?\s*(?:±|&plusmn;|&#177;|\+/-)\s*(\d+(?:\.\d+)?)\s*(hour|hours|minute|minutes|min|day|days)", html, re.S):
+        if "Reentered" in m.group(2): continue
+        ts = m.group(3)
+        t = datetime.strptime(ts, "%b %d, %Y %H:%M:%S" if ts.count(":") == 2 else "%b %d, %Y %H:%M").replace(tzinfo=timezone.utc)
         w = float(m.group(4)) * {"m": 1 / 60, "h": 1, "d": 24}[m.group(5)[0]]
-        out[int(m.group(1))] = (t, w)
+        out.setdefault(int(m.group(1)), (t, w))
+    return out
+
+
+def aerospace_all(pages=4):
+    """The list is paginated (?page=0, 1, ...); keep predictions that haven't passed yet."""
+    out, now = {}, datetime.now(timezone.utc)
+    for k in range(pages):
+        try: html = get("https://aerospace.org/reentries" + (f"?page={k}" if k else ""))
+        except Exception as e: print(f"Aerospace page {k}:", e); break
+        got = aerospace_predictions(html)
+        if not got: break
+        for nid, (t, w) in got.items():
+            if t + timedelta(hours=w) > now: out.setdefault(nid, (t, w))
     return out
 
 
@@ -188,8 +204,9 @@ def main():
         sky = parse_tle(get(f"{CT}?GROUP=active&FORMAT=tle"))
         try: decaying = parse_tle(get(f"{CT}?SPECIAL=DECAYING&FORMAT=tle"))
         except Exception as e: print("no DECAYING group:", e); decaying = {}
-        try: preds = aerospace_predictions(get("https://aerospace.org/reentries"))
+        try: preds = aerospace_all()
         except Exception as e: print("no Aerospace predictions:", e); preds = {}
+        print(f"Aerospace predictions: {len(preds)}")
         for nid in [k for k in preds if k not in sky and k not in decaying][:80]:
             try: decaying.update(parse_tle(get(f"{CT}?CATNR={nid}&FORMAT=tle")))
             except Exception: pass
@@ -225,7 +242,7 @@ def main():
         inc = sat.inclo * 180 / math.pi
         exp = exposure_path(sat, t0, half) if half <= 12 else exposure_band(inc)
         live.append({
-            "norad": nid, "name": name, "cospar": c.get("OBJECT_ID"), "type": c.get("OBJECT_TYPE"), "owner": c.get("OWNER"),
+            "norad": nid, "name": name, "cospar": c.get("OBJECT_ID"), "type": c.get("OBJECT_TYPE"), "owner": c.get("OWNER"), "site": c.get("LAUNCH_SITE"),
             "launch": c.get("LAUNCH_DATE"), "rcs": c.get("RCS"), "inc": round(inc, 2), "perigee": round(per), "tle": [l1, l2],
             "t0": t0.isoformat().replace("+00:00", "Z"), "half_h": round(half, 1), "source": src, "exposure": exp,
             "links": {"celestrak": f"https://celestrak.org/satcat/table-satcat.php?CATNR={nid}",
