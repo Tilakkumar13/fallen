@@ -16,6 +16,9 @@ ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "docs", "data")
 UA = {"User-Agent": "fallen-reentry-map/1.0 (+https://github.com/Tilakkumar13/fallen)"}
 CT = "https://celestrak.org/NORAD/elements/gp.php"
+CACHE = os.path.join(HERE, ".cache")          # last good downloads (kept between runs by actions/cache)
+STALE_H = 24                                  # fail the run only once the published data is this old
+AERO = {"blocked": False}                     # set once aerospace.org answers with a bot check
 R_E = 6378.137
 G = np.load(os.path.join(HERE, "grids.npz")); POP, CID = G["pop"].astype(np.float64), G["country"].astype(np.int32)
 COUNTRIES = json.load(open(os.path.join(HERE, "countries.json")))
@@ -31,6 +34,42 @@ def get(url, tries=3):
         except Exception as e:
             err = e; time.sleep(3 * (k + 1))
     raise err
+
+
+def get_cached(url, name, fallback=None):
+    """Download, keeping a copy; if the download fails, use the last good copy (or a fallback file)."""
+    path = os.path.join(CACHE, name)
+    try:
+        text = get(url)
+        os.makedirs(CACHE, exist_ok=True)
+        with open(path, "w") as f: f.write(text)
+        return text
+    except Exception as e:
+        for p in (path, fallback):
+            if p and os.path.exists(p):
+                print(f"{name}: download failed ({e}); using last good copy {os.path.relpath(p, ROOT)}")
+                return open(p).read()
+        raise
+
+
+def data_age_hours():
+    try:
+        u = json.load(open(os.path.join(OUT, "live.json")))["updated"]
+        return (datetime.now(timezone.utc) - datetime.fromisoformat(u.replace("Z", "+00:00"))).total_seconds() / 3600
+    except Exception:
+        return float("inf")
+
+
+def aero_get(url):
+    """aerospace.org sits behind a Cloudflare bot check: stop asking after the first refusal."""
+    if AERO["blocked"]: raise RuntimeError("aerospace.org blocks automated access")
+    try:
+        return get(url, tries=1)
+    except Exception as e:
+        if getattr(e, "code", None) in (403, 429, 503):
+            AERO["blocked"] = True
+            print(f"aerospace.org refused ({e}); skipping it for this run")
+        raise
 
 
 def parse_tle(text):
@@ -59,7 +98,7 @@ def aerospace_all(pages=4):
     """The list is paginated (?page=0, 1, ...); keep predictions that haven't passed yet."""
     out, now = {}, datetime.now(timezone.utc)
     for k in range(pages):
-        try: html = get("https://aerospace.org/reentries" + (f"?page={k}" if k else ""))
+        try: html = aero_get("https://aerospace.org/reentries" + (f"?page={k}" if k else ""))
         except Exception as e: print(f"Aerospace page {k}:", e); break
         got = aerospace_predictions(html)
         if not got: break
@@ -165,7 +204,7 @@ def record(track, nid, name, typ, now, aero, ours):
 
 
 def aerospace_final(nid):
-    html = get(f"https://aerospace.org/reentries/{nid}")
+    html = aero_get(f"https://aerospace.org/reentries/{nid}")
     if "Reentered" not in html: return None
     m = re.search(r"(\d{1,2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}) UTC\s*(?:±|&plusmn;)\s*(\d+(?:\.\d+)?)\s*(minute|hour|day)", html)
     if not m: return None
@@ -201,7 +240,13 @@ def main():
         decaying, preds = {}, {}
         satcat_text = open(os.path.join(raw, "satcat.csv")).read()
     else:
-        sky = parse_tle(get(f"{CT}?GROUP=active&FORMAT=tle"))
+        try:
+            sky = parse_tle(get_cached(f"{CT}?GROUP=active&FORMAT=tle", "active.tle", fallback=os.path.join(OUT, "sky.tle")))
+            satcat_text = get_cached("https://celestrak.org/pub/satcat.csv", "satcat.csv")
+        except Exception as e:
+            age = data_age_hours()
+            print(f"CelesTrak unavailable and no saved copy: {e}. Published data is {age:.0f} h old.")
+            sys.exit(1 if age > STALE_H else 0)       # keep the old data; only alarm once it is stale
         try: decaying = parse_tle(get(f"{CT}?SPECIAL=DECAYING&FORMAT=tle"))
         except Exception as e: print("no DECAYING group:", e); decaying = {}
         try: preds = aerospace_all()
@@ -210,7 +255,6 @@ def main():
         for nid in [k for k in preds if k not in sky and k not in decaying][:80]:
             try: decaying.update(parse_tle(get(f"{CT}?CATNR={nid}&FORMAT=tle")))
             except Exception: pass
-        satcat_text = get("https://celestrak.org/pub/satcat.csv")
     cat = {int(r["NORAD_CAT_ID"]): r for r in csv.DictReader(io.StringIO(satcat_text))}
     allobj = dict(sky); allobj.update(decaying)
     # candidates: low perigee, from Aerospace's list, or in the decaying group
